@@ -1,0 +1,8 @@
+ru/nsd/DayPlan.java
+ ru.nsd.DayPlan
+ru/nsd/Noda.java
+ ru.nsd.Noda
+ru/nsd/Menu.java
+ ru.nsd.Menu
+ru/nsd/LifePlan.java
+ ru.nsd.LifePlan
