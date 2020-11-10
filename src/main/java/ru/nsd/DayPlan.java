@@ -6,8 +6,8 @@ import java.util.Map;
 public class DayPlan {
     private Map<String, String> dayPlan;
 
-    public DayPlan(){
-        dayPlan = new HashMap<>();
+    public DayPlan(Map<String, String> dayPlan){
+        this.dayPlan = dayPlan;
     }
 
     public Map<String, String> getDayPlan() {

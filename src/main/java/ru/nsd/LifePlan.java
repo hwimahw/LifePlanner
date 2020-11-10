@@ -57,7 +57,7 @@ public class LifePlan {
         }
     }
 
-    private void fillPlanOfLeaves(DayPlan dayPlan){
+    public void fillPlanOfLeaves(DayPlan dayPlan){
         Map<String, String> plans = dayPlan.getDayPlan();
         for(Map.Entry<String, String> entry:plans.entrySet()){
             for(Noda noda:this.leaves){
@@ -68,7 +68,7 @@ public class LifePlan {
         }
     }
 
-    public void printLifePlan(){
+    public void print(){
         printLifePlanIter(this.root, "");
     }
 
@@ -101,7 +101,7 @@ public class LifePlan {
     public static void main(String[] args) {
         LifePlan lifePlan = new LifePlan();
         String str = "sdsd";
-        lifePlan.printLifePlan();
+        lifePlan.print();
     }
 
 }
