@@ -6,7 +6,10 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +84,7 @@ public class LifePlan {
         }
     }
 
-    private void fillVisitNodesForPrinting(){
+    public void fillVisitNodesForPrinting(){
         List<Noda> leaves = this.leaves;
         for(int i = 0; i < leaves.size(); i++){
             if(leaves.get(i).getPlan() != null) {
@@ -97,6 +100,51 @@ public class LifePlan {
         noda.setVisit(1);
         fillVisitNodesForPrintingIter(noda.getParent());
     }
+
+    public void printDayPlanToFile(){
+        File file = new File("./src/main/resources/out.txt");
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
+        try{
+            fileWriter = new FileWriter(file, true);
+            bufferedWriter = new BufferedWriter(fileWriter);
+            Noda noda = this.root;
+            bufferedWriter.write("-----------------------------------------------------------\n");
+            printDayPlanToFileIter(noda, bufferedWriter, "");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                bufferedWriter.close();
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void printDayPlanToFileIter(Noda noda, BufferedWriter bufferedWriter, String gaps){
+        try {
+            if (noda.getVisit() == 1) {
+                bufferedWriter.write(gaps + noda.getName() + "\n");
+                List<Noda> children = noda.getChildren();
+                if(children.size() == 0){
+                    bufferedWriter.write(gaps + "  " + noda.getPlan() + "\n");
+                }
+                for (int i = 0; i < children.size(); i++) {
+                    printDayPlanToFileIter(children.get(i), bufferedWriter, gaps + "  ");
+                }
+            }
+        }catch (Exception ex){
+            return;
+        }
+
+    }
+
+
+
+
 
     public static void main(String[] args) {
         LifePlan lifePlan = new LifePlan();

@@ -8,6 +8,7 @@ public class DayPlan {
 
     public DayPlan(Map<String, String> dayPlan){
         this.dayPlan = dayPlan;
+
     }
 
     public Map<String, String> getDayPlan() {

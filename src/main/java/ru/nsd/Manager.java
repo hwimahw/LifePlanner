@@ -108,7 +108,8 @@ public class Manager {
                     }
                     DayPlan dayPlan = new DayPlan(subjectPlan);
                     lifePlan.fillPlanOfLeaves(dayPlan);
-                    String str = "5";
+                    lifePlan.fillVisitNodesForPrinting();
+                    lifePlan.printDayPlanToFile();
 
                 }
                 case (3): {
