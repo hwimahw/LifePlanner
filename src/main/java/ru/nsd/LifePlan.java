@@ -37,8 +37,7 @@ public class LifePlan {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = factory.newDocumentBuilder();
-            File file = new File("./src/main/resources/lifePlan.xml");
-            Document doc = docBuilder.parse(file);
+            Document doc = docBuilder.parse(getClass().getResourceAsStream("/ru/nsd/lifePlanInput.jsp"));
             this.setRoot(new Noda(doc.getDocumentElement().getAttribute("name"), null));
             buildLifePlanIter(doc.getDocumentElement(), this.root);
         }catch(Exception e){
@@ -152,4 +151,7 @@ public class LifePlan {
         lifePlan.print();
     }
 
+    public List<Noda> getLeaves() {
+        return leaves;
+    }
 }
