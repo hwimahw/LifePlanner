@@ -6,10 +6,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +22,11 @@ public class LifePlan {
         buildLifePlan();
     }
 
+    public LifePlan(InputStream inputStream){
+        leaves = new ArrayList<>();
+        buildLifePlan(inputStream);
+    }
+
     public Noda getRoot() {
         return root;
     }
@@ -37,13 +39,25 @@ public class LifePlan {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = factory.newDocumentBuilder();
-            Document doc = docBuilder.parse(getClass().getResourceAsStream("/ru/nsd/lifePlanInput.jsp"));
+            Document doc = docBuilder.parse(getClass().getResourceAsStream("/ru/nsd/lifePlan.xml"));
             this.setRoot(new Noda(doc.getDocumentElement().getAttribute("name"), null));
             buildLifePlanIter(doc.getDocumentElement(), this.root);
         }catch(Exception e){
             return;
         }
     }
+    private void buildLifePlan(InputStream inputStream){
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = factory.newDocumentBuilder();
+            Document doc = docBuilder.parse(inputStream);
+            this.setRoot(new Noda(doc.getDocumentElement().getAttribute("name"), null));
+            buildLifePlanIter(doc.getDocumentElement(), this.root);
+        }catch(Exception e){
+            return;
+        }
+    }
+
     private void buildLifePlanIter(Node node, Noda noda){
         NodeList children = node.getChildNodes();
         if(children.getLength() == 0){

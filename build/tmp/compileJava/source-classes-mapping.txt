@@ -1,14 +1,14 @@
-ru/nsd/Menu.java
- ru.nsd.Menu
 ru/nsd/Noda.java
  ru.nsd.Noda
 ru/nsd/DayPlan.java
  ru.nsd.DayPlan
 ru/nsd/Start.java
  ru.nsd.Start
+ru/nsd/Menu.java
+ ru.nsd.Menu
 ru/nsd/Manager.java
  ru.nsd.Manager
-ru/nsd/servlets/Servlet.java
- ru.nsd.servlets.Servlet
 ru/nsd/LifePlan.java
  ru.nsd.LifePlan
+ru/nsd/servlets/Servlet.java
+ ru.nsd.servlets.Servlet

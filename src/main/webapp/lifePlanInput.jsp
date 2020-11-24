@@ -7,8 +7,11 @@
 </head>
 
 <body>
-<%--a = <c:out value="${}"/>--%>
 
+<form method="post" action="/servlet" enctype="multipart/form-data">
+    Choose a file: <input type="file" name="file" />
+    <input type="submit" value="Upload" />
+</form>
 
     <c:forEach var="leaf" items="${leaves}">
         <p><b><c:out value="${leaf.name}"/></b><br>
