@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<MainFields name="Саморазвитие">
+<MainFields name="Self-development">
     <MainField name="Study">
         <Field name="Computer Science">
-            <Subject name="Основы программирования"></Subject>
-            <Subject name="Алгоритмы и структуры данных"></Subject>
+            <Subject name="Programming"></Subject>
+            <Subject name="Algorithms"></Subject>
         </Field>
     </MainField>
     <MainField name="Sport">
@@ -12,5 +12,5 @@
             <Subject name="BBB"></Subject>
         </Field>
     </MainField>
-    <MainField name="Прочее"></MainField>
+    <MainField name="Other"></MainField>
 </MainFields>

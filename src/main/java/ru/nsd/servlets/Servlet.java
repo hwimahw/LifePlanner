@@ -1,6 +1,8 @@
 package ru.nsd.servlets;
 
+import ru.nsd.DayPlan;
 import ru.nsd.LifePlan;
+import ru.nsd.Noda;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,23 +15,34 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @MultipartConfig
 public class Servlet extends HttpServlet {
+
+    private LifePlan lifePlan;
+
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
         InputStream fileContent = filePart.getInputStream();
-        LifePlan lifePlan = new LifePlan(fileContent);
+        lifePlan = new LifePlan(fileContent);
         request.setAttribute("leaves", lifePlan.getLeaves());
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("lifePlanInput.jsp");
         requestDispatcher.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        LifePlan lifePlan = new LifePlan();
-        request.setAttribute("leaves", lifePlan.getLeaves());
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("lifePlanInput.jsp");
-        requestDispatcher.forward(request, response);
+       List<Noda> leaves = lifePlan.getLeaves();
+       Map<String, String> dayPlanMap = new HashMap<>();
+       for(Noda leaf:leaves){
+           String subject = leaf.getName();
+           String plan = request.getParameter(subject);
+           if(!("".equals(plan))){
+               dayPlanMap.put(subject, plan);
+           }
+       }
+        lifePlan.fillPlanOfLeaves(new DayPlan(dayPlanMap));
     }
 }
