@@ -6,13 +6,33 @@
 <welcome-file-list>
     <welcome-file>lifePlanInput.jsp</welcome-file>
 </welcome-file-list>
+
     <servlet>
-        <servlet-name>Servlet</servlet-name>
-        <servlet-class>ru.nsd.servlets.Servlet</servlet-class>
+        <servlet-name>ControllerServlet</servlet-name>
+        <servlet-class>ru.nsd.servlets.ControllerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Servlet</servlet-name>
-        <url-pattern>/servlet</url-pattern>
+        <servlet-name>ControllerServlet</servlet-name>
+        <url-pattern>/*</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>uploadFileServlet</servlet-name>
+        <servlet-class>ru.nsd.servlets.UploadFileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>uploadFileServlet</servlet-name>
+        <url-pattern>/uploadFileServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SetLeafPlanServlet</servlet-name>
+        <servlet-class>ru.nsd.servlets.SetLeafPlanServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SetLeafPlanServlet</servlet-name>
+        <url-pattern>/setLeafPlanServlet</url-pattern>
+    </servlet-mapping>
+
+
 
 </web-app>

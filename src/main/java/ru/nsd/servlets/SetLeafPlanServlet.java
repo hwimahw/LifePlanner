@@ -5,6 +5,7 @@ import ru.nsd.LifePlan;
 import ru.nsd.Noda;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -20,29 +21,23 @@ import java.util.List;
 import java.util.Map;
 
 @MultipartConfig
-public class Servlet extends HttpServlet {
-
-    private LifePlan lifePlan;
+public class SetLeafPlanServlet extends HttpServlet {
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
-        InputStream fileContent = filePart.getInputStream();
-        lifePlan = new LifePlan(fileContent);
-        request.setAttribute("leaves", lifePlan.getLeaves());
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("lifePlanInput.jsp");
-        requestDispatcher.forward(request, response);
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-       List<Noda> leaves = lifePlan.getLeaves();
-       Map<String, String> dayPlanMap = new HashMap<>();
-       for(Noda leaf:leaves){
-           String subject = leaf.getName();
-           String plan = request.getParameter(subject);
-           if(!("".equals(plan))){
-               dayPlanMap.put(subject, plan);
-           }
-       }
+        LifePlan lifePlan = (LifePlan)getServletConfig().getServletContext().getAttribute("lifePlan");
+        List<Noda> leaves = lifePlan.getLeaves();
+        Map<String, String> dayPlanMap = new HashMap<>();
+        for(Noda leaf:leaves){
+            String subject = leaf.getName();
+            String plan = request.getParameter(subject);
+            if(!("".equals(plan))){
+                dayPlanMap.put(subject, plan);
+            }
+        }
         lifePlan.fillPlanOfLeaves(new DayPlan(dayPlanMap));
     }
 }

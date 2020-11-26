@@ -7,13 +7,13 @@
 
 <body>
 
-<form method="post" action="/servlet" enctype="multipart/form-data">
+<form method="post" action="/uploadFileServlet" enctype="multipart/form-data">
     Choose a file: <input type="file" name="file" />
     <input type="submit" value="Upload" />
 </form>
 
 <c:if test="${leaves.size() > 0}">
-    <form action="/servlet" method="get">
+    <form action="/setLeafPlanServlet" method="get">
         <c:forEach var="leaf" items="${leaves}" varStatus="loop">
             <p><b><c:out value="${leaf.name}"/></b><br>
                 <input type="text" name="${leaf.name}" size="40">
