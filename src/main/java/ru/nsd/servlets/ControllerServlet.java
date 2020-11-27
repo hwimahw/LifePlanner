@@ -2,10 +2,12 @@ package ru.nsd.servlets;
 
 import ru.nsd.DayPlan;
 import ru.nsd.LifePlan;
+import ru.nsd.Model;
 import ru.nsd.Noda;
 import ru.nsd.services.ModelService;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -23,8 +25,15 @@ import java.util.Map;
 @MultipartConfig
 public class ControllerServlet extends HttpServlet {
 
-    private LifePlan lifePlan;
-    ModelService modelService = new ModelService();
+    ModelService modelService;
+    Model model;
+
+    public void init(ServletConfig servletConfig) throws ServletException{
+        super.init(servletConfig);
+        modelService = (ModelService)getServletConfig().getServletContext().getAttribute("modelService");
+        model = (Model)getServletConfig().getServletContext().getAttribute("model");
+
+    }
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
     }
@@ -32,8 +41,8 @@ public class ControllerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String action = request.getServletPath();
         switch(action){
-            case("/first"):
-                //calling service method
+            case("/save"):
+                modelService.insert(model);
             case("/second"):
                 //calling service method
         }

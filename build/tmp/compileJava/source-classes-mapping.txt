@@ -10,7 +10,19 @@ ru/nsd/Manager.java
  ru.nsd.Manager
 ru/nsd/LifePlan.java
  ru.nsd.LifePlan
-ru/nsd/servlets/SetLeafPlanServlet.java
- ru.nsd.servlets.SetLeafPlanServlet
 ru/nsd/servlets/UploadFileServlet.java
  ru.nsd.servlets.UploadFileServlet
+ru/nsd/dao/Dao.java
+ ru.nsd.dao.Dao
+ru/nsd/ConnectionFactory.java
+ ru.nsd.ConnectionFactory
+ru/nsd/Model.java
+ ru.nsd.Model
+ru/nsd/dao/ModelDao.java
+ ru.nsd.dao.ModelDao
+ru/nsd/servlets/SetLeafPlanServlet.java
+ ru.nsd.servlets.SetLeafPlanServlet
+ru/nsd/services/ModelService.java
+ ru.nsd.services.ModelService
+ru/nsd/servlets/ControllerServlet.java
+ ru.nsd.servlets.ControllerServlet

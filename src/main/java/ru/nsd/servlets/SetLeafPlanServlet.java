@@ -2,7 +2,9 @@ package ru.nsd.servlets;
 
 import ru.nsd.DayPlan;
 import ru.nsd.LifePlan;
+import ru.nsd.Model;
 import ru.nsd.Noda;
+import ru.nsd.services.ModelService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -38,6 +40,14 @@ public class SetLeafPlanServlet extends HttpServlet {
                 dayPlanMap.put(subject, plan);
             }
         }
-        lifePlan.fillPlanOfLeaves(new DayPlan(dayPlanMap));
+        DayPlan dayPlan = new DayPlan(dayPlanMap);
+        lifePlan.fillPlanOfLeaves(dayPlan);
+        Model model = new Model(dayPlanMap);
+        ModelService modelService = new ModelService();
+        modelService.createTable(model);
+        getServletConfig().getServletContext().setAttribute("modelService", modelService);
+        getServletConfig().getServletContext().setAttribute("model", model);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/save");
+        requestDispatcher.forward(request, response);
     }
 }

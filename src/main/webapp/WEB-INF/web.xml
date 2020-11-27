@@ -13,7 +13,8 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ControllerServlet</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/save</url-pattern>
+        <url-pattern>/get</url-pattern>
     </servlet-mapping>
 
     <servlet>

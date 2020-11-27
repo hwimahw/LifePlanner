@@ -12,9 +12,17 @@ public class ModelDao implements Dao<Model> {
             sql = sql + entry.getKey() + " varchar(60), ";
         }
         sql = changeLastCommaIntoGap(sql) + ")";
+        try {
+            Connection conn = ConnectionFactory.getConnection();
+            Statement stmt = conn.createStatement();
+            stmt.execute(sql);
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+
     }
 
-    public boolean insert(Model data){ // Названия листьев в xml файле должны соответствовать тому, как мы хотим назвать колонки таблицы в БД
+    public void insert(Model data){ // Названия листьев в xml файле должны соответствовать тому, как мы хотим назвать колонки таблицы в БД
         String sql1 = "insert into lifeplan ( ";
         String sql2 = "(";
         Map<String, String> dayPlan = data.getDayPlan();
@@ -25,6 +33,18 @@ public class ModelDao implements Dao<Model> {
         sql1 = changeLastCommaIntoGap(sql1) + ") VALUES ";
         sql2 = changeLastCommaIntoGap(sql2) + ")";
         String sql = sql1 + sql2;
+        try {
+            Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            int i = 0;
+            for(Map.Entry<String, String> entry:dayPlan.entrySet()){
+                stmt.setString(i, entry.getValue());
+                i++;
+            }
+            stmt.executeUpdate(sql);
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
     }
 
     private String changeLastCommaIntoGap(String sql){
