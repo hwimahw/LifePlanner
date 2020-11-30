@@ -1,15 +1,17 @@
 package ru.nsd.dao;
 import ru.nsd.Model;
 import ru.nsd.ConnectionFactory;
+import ru.nsd.Noda;
+
 import java.sql.*;
+import java.util.List;
 import java.util.Map;
 
-public class ModelDao implements Dao<Model> {
-    public void create(Model data){ // Названия листьев в xml файле должны соответствовать тому, как мы хотим назвать колонки таблицы в БД
+public class ModelDao {
+    public void create(List<Noda> leaves){ // Названия листьев в xml файле должны соответствовать тому, как мы хотим назвать колонки таблицы в БД
         String sql = "create table lifeplan ( ";
-        Map<String, String> dayPlan = data.getDayPlan();
-        for(Map.Entry entry:dayPlan.entrySet()){
-            sql = sql + entry.getKey() + " varchar(60), ";
+        for(Noda leaf:leaves){
+            sql = sql + leaf.getName() + " varchar(60), ";
         }
         sql = changeLastCommaIntoGap(sql) + ")";
         try {
@@ -36,12 +38,12 @@ public class ModelDao implements Dao<Model> {
         try {
             Connection conn = ConnectionFactory.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
-            int i = 0;
+            int i = 1;
             for(Map.Entry<String, String> entry:dayPlan.entrySet()){
                 stmt.setString(i, entry.getValue());
                 i++;
             }
-            stmt.executeUpdate(sql);
+            stmt.executeUpdate();
         }catch(SQLException ex){
             ex.printStackTrace();
         }

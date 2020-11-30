@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 public class ConnectionFactory {
     public static final String JDBC_DRIVER = "org.h2.Driver";
-    public static final String URL = "jdbc:h2:~/test2;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE";
+    public static final String URL = "jdbc:h2:~/test1;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE";
     public static final String USER = "sa";
     public static final String PASS = "";
 

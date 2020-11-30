@@ -30,7 +30,7 @@ public class ControllerServlet extends HttpServlet {
 
     public void init(ServletConfig servletConfig) throws ServletException{
         super.init(servletConfig);
-        modelService = (ModelService)getServletConfig().getServletContext().getAttribute("modelService");
+        modelService = new ModelService();
         model = (Model)getServletConfig().getServletContext().getAttribute("model");
 
     }
