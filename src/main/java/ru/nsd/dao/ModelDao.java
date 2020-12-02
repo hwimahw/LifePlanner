@@ -1,9 +1,9 @@
 package ru.nsd.dao;
-import ru.nsd.Model;
-import ru.nsd.ConnectionFactory;
-import ru.nsd.Noda;
+import ru.nsd.*;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +47,28 @@ public class ModelDao {
         }catch(SQLException ex){
             ex.printStackTrace();
         }
+    }
+
+    public List<Map<String, String>> select(LifePlan lifePlan){ // Названия листьев в xml файле должны соответствовать тому, как мы хотим назвать колонки таблицы в БД
+        List<Map<String, String>> dayPlans = null;
+        String sql = "select * from lifeplan";
+        try {
+            Connection conn = ConnectionFactory.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet resultSet = stmt.executeQuery(sql);
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+            dayPlans = new ArrayList<>();
+            while(resultSet.next()){
+                Map<String, String> dayPlan = new HashMap<>();
+                for(int i = 1; i <= lifePlan.getLeaves().size(); i++){
+                    dayPlan.put(resultSetMetaData.getColumnName(i), resultSet.getString(i));
+                }
+                dayPlans.add(dayPlan);
+            }
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return dayPlans;
     }
 
     private String changeLastCommaIntoGap(String sql){

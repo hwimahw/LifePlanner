@@ -77,8 +77,10 @@ public class LifePlan {
         Map<String, String> plans = dayPlan.getDayPlan();
         for(Map.Entry<String, String> entry:plans.entrySet()){
             for(Noda noda:this.leaves){
-                if(entry.getKey().equals(noda.getName())){
-                    noda.setPlan(entry.getValue());
+                if(entry.getKey().equals(noda.getName().toUpperCase())){
+                    if(!"null".equals(entry.getValue())) {
+                        noda.setPlan(entry.getValue());
+                    }
                 }
             }
         }
@@ -106,6 +108,19 @@ public class LifePlan {
         }
     }
 
+    public void fillNonVisitNodes(){
+        fillNonVisitNodesIter(this.root);
+    }
+
+    private void fillNonVisitNodesIter(Noda root){
+        root.setVisit(0);
+        root.setPlan(null);
+        List<Noda> children = root.getChildren();
+        for(int i = 0; i < children.size(); i++){
+            fillNonVisitNodesIter(children.get(i));
+        }
+    }
+
     private void fillVisitNodesForPrintingIter(Noda noda){
         if(noda == null){
             return;
@@ -115,7 +130,7 @@ public class LifePlan {
     }
 
     public void printDayPlanToFile(){
-        File file = new File("./src/main/resources/out.txt");
+        File file = new File("out.txt");
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         try{

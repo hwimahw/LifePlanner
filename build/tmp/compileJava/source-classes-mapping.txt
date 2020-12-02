@@ -2,24 +2,22 @@ ru/nsd/DayPlan.java
  ru.nsd.DayPlan
 ru/nsd/ConnectionFactory.java
  ru.nsd.ConnectionFactory
-ru/nsd/LifePlan.java
- ru.nsd.LifePlan
-ru/nsd/Menu.java
- ru.nsd.Menu
-ru/nsd/Manager.java
- ru.nsd.Manager
-ru/nsd/Start.java
- ru.nsd.Start
 ru/nsd/Model.java
  ru.nsd.Model
+ru/nsd/Menu.java
+ ru.nsd.Menu
 ru/nsd/Noda.java
  ru.nsd.Noda
-ru/nsd/dao/Dao.java
- ru.nsd.dao.Dao
+ru/nsd/Start.java
+ ru.nsd.Start
+ru/nsd/Manager.java
+ ru.nsd.Manager
 ru/nsd/servlets/UploadFileServlet.java
  ru.nsd.servlets.UploadFileServlet
 ru/nsd/servlets/SetLeafPlanServlet.java
  ru.nsd.servlets.SetLeafPlanServlet
+ru/nsd/LifePlan.java
+ ru.nsd.LifePlan
 ru/nsd/dao/ModelDao.java
  ru.nsd.dao.ModelDao
 ru/nsd/servlets/ControllerServlet.java

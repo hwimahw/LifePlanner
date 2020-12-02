@@ -1,10 +1,12 @@
 package ru.nsd.services;
 
+import ru.nsd.LifePlan;
 import ru.nsd.Model;
 import ru.nsd.Noda;
 import ru.nsd.dao.ModelDao;
 
 import java.util.List;
+import java.util.Map;
 
 public class ModelService {
     ModelDao modelDao = new ModelDao();
@@ -16,5 +18,12 @@ public class ModelService {
     public void insert(Model data){
         modelDao.insert(data);
     }
+
+    public List<Map<String, String>> select(LifePlan lifePlan){
+        return modelDao.select(lifePlan);
+    }
+
+
+
 
 }

@@ -22,17 +22,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@MultipartConfig
 public class ControllerServlet extends HttpServlet {
 
-    ModelService modelService;
+    ModelService modelService = new ModelService();
     Model model;
+    LifePlan lifePlan;
 
     public void init(ServletConfig servletConfig) throws ServletException{
         super.init(servletConfig);
-        modelService = new ModelService();
         model = (Model)getServletConfig().getServletContext().getAttribute("model");
-
+        lifePlan = (LifePlan) getServletConfig().getServletContext().getAttribute("lifePlan");;
     }
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
@@ -43,8 +42,18 @@ public class ControllerServlet extends HttpServlet {
         switch(action){
             case("/save"):
                 modelService.insert(model);
-            case("/second"):
-                //calling service method
+            case("/get"):
+                List<Map<String, String>> dayPlans =  modelService.select(lifePlan);
+                if(dayPlans != null){
+                    for(Map<String, String> dayPlan:dayPlans){
+                        lifePlan.fillNonVisitNodes();
+                        DayPlan dPl = new DayPlan(dayPlan);
+                        lifePlan.fillPlanOfLeaves(dPl);
+                        lifePlan.fillVisitNodesForPrinting();
+                        lifePlan.printDayPlanToFile();
+                    }
+
+                }
         }
     }
 }
