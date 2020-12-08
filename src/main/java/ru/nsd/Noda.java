@@ -11,7 +11,7 @@ public class Noda {
     private Noda parent;
     private int visit;
 
-    public Noda(String name, Noda parent){
+    public Noda(String name, Noda parent) {
         children = new ArrayList<>();
         this.name = name;
         this.plan = null;

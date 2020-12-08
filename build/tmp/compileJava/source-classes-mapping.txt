@@ -20,7 +20,7 @@ ru/nsd/LifePlan.java
  ru.nsd.LifePlan
 ru/nsd/dao/ModelDao.java
  ru.nsd.dao.ModelDao
-ru/nsd/servlets/ControllerServlet.java
- ru.nsd.servlets.ControllerServlet
 ru/nsd/services/ModelService.java
  ru.nsd.services.ModelService
+ru/nsd/servlets/ControllerServlet.java
+ ru.nsd.servlets.ControllerServlet

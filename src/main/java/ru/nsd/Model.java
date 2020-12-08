@@ -6,7 +6,7 @@ import java.util.Map;
 public class Model {
     Map<String, String> dayPlan;
 
-    public Model(Map<String, String> dayPlan){
+    public Model(Map<String, String> dayPlan) {
         this.dayPlan = dayPlan;
     }
 

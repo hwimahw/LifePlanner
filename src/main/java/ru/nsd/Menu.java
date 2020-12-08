@@ -6,9 +6,10 @@ import java.util.List;
 public class Menu {
     private List<String> menu = new ArrayList<>();
 
-    Menu(){
+    Menu() {
         buildMainMenu();
     }
+
 
     public void buildPrintMenu() {
         for (int i = 0; i < menu.size(); i++) {

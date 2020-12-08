@@ -17,12 +17,12 @@ public class LifePlan {
 
     private List<Noda> leaves;
 
-    public LifePlan(){
+    public LifePlan() {
         leaves = new ArrayList<>();
         buildLifePlan();
     }
 
-    public LifePlan(InputStream inputStream){
+    public LifePlan(InputStream inputStream) {
         leaves = new ArrayList<>();
         buildLifePlan(inputStream);
     }
@@ -35,37 +35,38 @@ public class LifePlan {
         this.root = root;
     }
 
-    private void buildLifePlan(){
+    private void buildLifePlan() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = factory.newDocumentBuilder();
             Document doc = docBuilder.parse(getClass().getResourceAsStream("/ru/nsd/lifePlan.xml"));
             this.setRoot(new Noda(doc.getDocumentElement().getAttribute("name"), null));
             buildLifePlanIter(doc.getDocumentElement(), this.root);
-        }catch(Exception e){
+        } catch (Exception e) {
             return;
         }
     }
-    private void buildLifePlan(InputStream inputStream){
+
+    private void buildLifePlan(InputStream inputStream) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = factory.newDocumentBuilder();
             Document doc = docBuilder.parse(inputStream);
             this.setRoot(new Noda(doc.getDocumentElement().getAttribute("name"), null));
             buildLifePlanIter(doc.getDocumentElement(), this.root);
-        }catch(Exception e){
+        } catch (Exception e) {
             return;
         }
     }
 
-    private void buildLifePlanIter(Node node, Noda noda){
+    private void buildLifePlanIter(Node node, Noda noda) {
         NodeList children = node.getChildNodes();
-        if(children.getLength() == 0){
+        if (children.getLength() == 0) {
             leaves.add(noda);
         }
-        for(int i = 0; i < children.getLength(); i++){
+        for (int i = 0; i < children.getLength(); i++) {
             Node nodeChild = children.item(i);
-            if(nodeChild.getNodeType() != Node.TEXT_NODE) {
+            if (nodeChild.getNodeType() != Node.TEXT_NODE) {
                 Noda nodaChild = new Noda(nodeChild.getAttributes().getNamedItem("name").getNodeValue(), noda);
                 noda.getChildren().add(nodaChild);
                 buildLifePlanIter(nodeChild, nodaChild);
@@ -73,12 +74,12 @@ public class LifePlan {
         }
     }
 
-    public void fillPlanOfLeaves(DayPlan dayPlan){
+    public void fillPlanOfLeaves(DayPlan dayPlan) {
         Map<String, String> plans = dayPlan.getDayPlan();
-        for(Map.Entry<String, String> entry:plans.entrySet()){
-            for(Noda noda:this.leaves){
-                if(entry.getKey().equals(noda.getName().toUpperCase())){
-                    if(!"null".equals(entry.getValue())) {
+        for (Map.Entry<String, String> entry : plans.entrySet()) {
+            for (Noda noda : this.leaves) {
+                if (entry.getKey().equals(noda.getName().toUpperCase())) {
+                    if (!"null".equals(entry.getValue())) {
                         noda.setPlan(entry.getValue());
                     }
                 }
@@ -86,54 +87,54 @@ public class LifePlan {
         }
     }
 
-    public void print(){
+    public void print() {
         printLifePlanIter(this.root, "");
     }
 
-    public void printLifePlanIter(Noda noda, String gaps){
+    public void printLifePlanIter(Noda noda, String gaps) {
         System.out.println(gaps + noda.getName());
         gaps = gaps + "   ";
         List<Noda> children = noda.getChildren();
-        for(int i = 0; i < children.size(); i++){
+        for (int i = 0; i < children.size(); i++) {
             printLifePlanIter(children.get(i), gaps);
         }
     }
 
-    public void fillVisitNodesForPrinting(){
+    public void fillVisitNodesForPrinting() {
         List<Noda> leaves = this.leaves;
-        for(int i = 0; i < leaves.size(); i++){
-            if(leaves.get(i).getPlan() != null) {
+        for (int i = 0; i < leaves.size(); i++) {
+            if (leaves.get(i).getPlan() != null) {
                 fillVisitNodesForPrintingIter(leaves.get(i));
             }
         }
     }
 
-    public void fillNonVisitNodes(){
+    public void fillNonVisitNodes() {
         fillNonVisitNodesIter(this.root);
     }
 
-    private void fillNonVisitNodesIter(Noda root){
+    private void fillNonVisitNodesIter(Noda root) {
         root.setVisit(0);
         root.setPlan(null);
         List<Noda> children = root.getChildren();
-        for(int i = 0; i < children.size(); i++){
+        for (int i = 0; i < children.size(); i++) {
             fillNonVisitNodesIter(children.get(i));
         }
     }
 
-    private void fillVisitNodesForPrintingIter(Noda noda){
-        if(noda == null){
+    private void fillVisitNodesForPrintingIter(Noda noda) {
+        if (noda == null) {
             return;
         }
         noda.setVisit(1);
         fillVisitNodesForPrintingIter(noda.getParent());
     }
 
-    public void printDayPlanToFile(){
+    public void printDayPlanToFile() {
         File file = new File("out.txt");
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
-        try{
+        try {
             fileWriter = new FileWriter(file, true);
             bufferedWriter = new BufferedWriter(fileWriter);
             Noda noda = this.root;
@@ -141,7 +142,7 @@ public class LifePlan {
             printDayPlanToFileIter(noda, bufferedWriter, "");
         } catch (IOException e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             try {
                 bufferedWriter.close();
                 fileWriter.close();
@@ -152,31 +153,27 @@ public class LifePlan {
 
     }
 
-    public void printDayPlanToFileIter(Noda noda, BufferedWriter bufferedWriter, String gaps){
+    public void printDayPlanToFileIter(Noda noda, BufferedWriter bufferedWriter, String gaps) {
         try {
             if (noda.getVisit() == 1) {
                 bufferedWriter.write(gaps + noda.getName() + "\n");
                 List<Noda> children = noda.getChildren();
-                if(children.size() == 0){
+                if (children.size() == 0) {
                     bufferedWriter.write(gaps + "  " + noda.getPlan() + "\n");
                 }
                 for (int i = 0; i < children.size(); i++) {
                     printDayPlanToFileIter(children.get(i), bufferedWriter, gaps + "  ");
                 }
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return;
         }
 
     }
 
 
-
-
-
     public static void main(String[] args) {
         LifePlan lifePlan = new LifePlan();
-        String str = "sdsd";
         lifePlan.print();
     }
 
