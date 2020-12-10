@@ -7,9 +7,9 @@
         </Field>
     </MainField>
     <MainField name="Sport">
-        <Field name="Футбол">
-            <Subject name="AAA"></Subject>
-            <Subject name="BBB"></Subject>
+        <Field name="Football">
+            <Subject name="Physiques"></Subject>
+            <Subject name="Techniques"></Subject>
         </Field>
     </MainField>
     <MainField name="Other"></MainField>

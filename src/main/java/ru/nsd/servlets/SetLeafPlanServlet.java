@@ -7,7 +7,6 @@ import ru.nsd.Noda;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +29,8 @@ public class SetLeafPlanServlet extends HttpServlet {
         LifePlan lifePlan = (LifePlan) getServletConfig().getServletContext().getAttribute("lifePlan");
         List<Noda> leaves = lifePlan.getLeaves();
         Map<String, String> dayPlanMap = new HashMap<>();
+        String date = request.getParameter("Date");
+        dayPlanMap.put("Date", date);
         for (Noda leaf : leaves) {
             String subject = leaf.getName();
             String plan = request.getParameter(subject);

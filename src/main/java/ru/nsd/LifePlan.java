@@ -130,7 +130,7 @@ public class LifePlan {
         fillVisitNodesForPrintingIter(noda.getParent());
     }
 
-    public void printDayPlanToFile() {
+    public void printDayPlanToFile(String date) {
         File file = new File("out.txt");
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
@@ -139,6 +139,7 @@ public class LifePlan {
             bufferedWriter = new BufferedWriter(fileWriter);
             Noda noda = this.root;
             bufferedWriter.write("-----------------------------------------------------------\n");
+            bufferedWriter.write(date + "\n\n");
             printDayPlanToFileIter(noda, bufferedWriter, "");
         } catch (IOException e) {
             e.printStackTrace();

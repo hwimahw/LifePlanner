@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +35,7 @@ public class ControllerServlet extends HttpServlet {
         switch (action) {
             case ("/save"):
                 modelService.insert(model);
+                break;
             case ("/get"):
                 List<Map<String, String>> dayPlans = modelService.select(lifePlan);
                 if (dayPlans != null) {
@@ -42,8 +44,7 @@ public class ControllerServlet extends HttpServlet {
                         DayPlan dPl = new DayPlan(dayPlan);
                         lifePlan.fillPlanOfLeaves(dPl);
                         lifePlan.fillVisitNodesForPrinting();
-                        lifePlan.printDayPlanToFile();
-
+                        lifePlan.printDayPlanToFile(dayPlan.get("DATE"));
                     }
                 }
                 String filePath = "out.txt";
