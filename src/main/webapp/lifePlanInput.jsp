@@ -28,12 +28,9 @@
         </c:forEach>
         <p><input type="submit" value="Save"></p>
     </form>
-
     <form action="/get" method="get" enctype="multipart/form-data">
         <p><button type="submit" id="btn_get">Get LifePlan</button></p>
     </form>
-
-
 </c:if>
 
 <%--<script>--%>

@@ -16,11 +16,11 @@ ru/nsd/dao/ModelDao.java
  ru.nsd.dao.ModelDao
 ru/nsd/servlets/SetLeafPlanServlet.java
  ru.nsd.servlets.SetLeafPlanServlet
-ru/nsd/servlets/ControllerServlet.java
- ru.nsd.servlets.ControllerServlet
+ru/nsd/servlets/UploadFileServlet.java
+ ru.nsd.servlets.UploadFileServlet
 ru/nsd/LifePlan.java
  ru.nsd.LifePlan
 ru/nsd/services/ModelService.java
  ru.nsd.services.ModelService
-ru/nsd/servlets/UploadFileServlet.java
- ru.nsd.servlets.UploadFileServlet
+ru/nsd/servlets/ControllerServlet.java
+ ru.nsd.servlets.ControllerServlet

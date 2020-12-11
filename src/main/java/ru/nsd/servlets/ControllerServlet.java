@@ -23,7 +23,6 @@ public class ControllerServlet extends HttpServlet {
 
     public void init(ServletConfig servletConfig) throws ServletException {
         super.init(servletConfig);
-        model = (Model) getServletConfig().getServletContext().getAttribute("model");
         lifePlan = (LifePlan) getServletConfig().getServletContext().getAttribute("lifePlan");
     }
 
@@ -34,9 +33,16 @@ public class ControllerServlet extends HttpServlet {
         String action = request.getServletPath();
         switch (action) {
             case ("/save"):
+                model = (Model) getServletConfig().getServletContext().getAttribute("model");
                 modelService.insert(model);
+                request.setAttribute("leaves", lifePlan.getLeaves());
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("lifePlanInput.jsp");
+                requestDispatcher.forward(request, response);
                 break;
             case ("/get"):
+                if(lifePlan == null){
+                    return; /// EXCEPTION
+                }
                 List<Map<String, String>> dayPlans = modelService.select(lifePlan);
                 if (dayPlans != null) {
                     for (Map<String, String> dayPlan : dayPlans) {
@@ -49,6 +55,7 @@ public class ControllerServlet extends HttpServlet {
                 }
                 String filePath = "out.txt";
                 File downloadFile = new File(filePath);
+                downloadFile.createNewFile();
                 FileInputStream inStream = new FileInputStream(downloadFile);
                 ServletContext context = getServletContext();
                 String mimeType = context.getMimeType(filePath);
