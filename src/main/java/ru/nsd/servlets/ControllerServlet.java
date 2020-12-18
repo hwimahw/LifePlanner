@@ -30,7 +30,7 @@ public class ControllerServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String action = request.getServletPath();
+        String action = request.getParameter("name");
         switch (action) {
             case ("/save"):
                 model = (Model) getServletConfig().getServletContext().getAttribute("model");

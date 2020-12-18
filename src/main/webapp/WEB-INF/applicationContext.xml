@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/util
+   		   http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <bean id="upload" class = "ru.nsd.servlets.UploadFileServlet"/>
+    <bean id ="setLeafPlan" class = "ru.nsd.servlets.SetLeafPlanServlet"/>
+    <bean id ="controller" class = "ru.nsd.servlets.ControllerServlet"/>
+
+    <util:map id="mappingHolder" map-class="java.util.HashMap">
+        <entry key="upload" value-ref="upload"/>
+        <entry key="setLeafPlan" value-ref="setLeafPlan"/>
+        <entry key="save" value-ref="controller"/>
+        <entry key="get" value-ref="controller"/>
+    </util:map>
+
+</beans>

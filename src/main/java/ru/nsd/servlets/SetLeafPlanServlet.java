@@ -42,7 +42,7 @@ public class SetLeafPlanServlet extends HttpServlet {
         lifePlan.fillPlanOfLeaves(dayPlan);
         Model model = new Model(dayPlanMap);
         getServletConfig().getServletContext().setAttribute("model", model);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/save");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Ctrl?name=save");
         requestDispatcher.forward(request, response);
     }
 }

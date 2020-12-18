@@ -18,6 +18,8 @@ dependencies {
     compile group: 'jstl', name: 'jstl', version: '1.2'
     compile group: 'com.h2database', name: 'h2', version: '1.4.200'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '5.2.6.RELEASE'
+    compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
 }
 
 test {

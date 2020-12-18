@@ -12,7 +12,7 @@
 
 <body>
 
-<form method="post" action="/uploadFileServlet" enctype="multipart/form-data">
+<form method="post" action="/Ctrl?name=upload" enctype="multipart/form-data">
     Choose a file: <input type="file" name="file" />
     <input type="submit" value="Upload" />
 </form>
