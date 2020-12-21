@@ -18,17 +18,18 @@
 </form>
 
 <c:if test="${leaves.size() > 0}">
-    <form action="/setLeafPlanServlet" method="get">
+    <form action="/Ctrl" method="get" >
         <p><b><c:out value="Date"/></b><br>
-            <input type="text" name="Date" size="40">
+            <input type="text" name="Date" size= "40">
         <c:forEach var="leaf" items="${leaves}" varStatus="loop">
             <p><b><c:out value="${leaf.name}"/></b><br>
                 <input type="text" name="${leaf.name}" size="40">
             </p>
         </c:forEach>
+        <input type="hidden" name="name" value="setLeafPlan" size="40">
         <p><input type="submit" value="Save"></p>
     </form>
-    <form action="/get" method="get" enctype="multipart/form-data">
+    <form action="/Ctrl?name=get" method="get" enctype="multipart/form-data">
         <p><button type="submit" id="btn_get">Get LifePlan</button></p>
     </form>
 </c:if>

@@ -1,11 +1,14 @@
 package ru.nsd.servlets;
 
+import org.springframework.web.context.ServletContextAware;
 import ru.nsd.DayPlan;
 import ru.nsd.LifePlan;
 import ru.nsd.Model;
 import ru.nsd.Noda;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SetLeafPlanServlet extends HttpServlet {
+public class SetLeafPlanServlet extends HttpServlet implements ServletContextAware {
+
+    ServletContext servletContext;
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
 
@@ -25,8 +30,18 @@ public class SetLeafPlanServlet extends HttpServlet {
         setLeafPlan(request, response);
     }
 
+    @Override
+    public void setServletContext(ServletContext servletContext){
+        this.servletContext = servletContext;
+
+    }
+
+    public ServletContext getServletContext(){
+        return servletContext;
+    }
+
     protected void setLeafPlan(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        LifePlan lifePlan = (LifePlan) getServletConfig().getServletContext().getAttribute("lifePlan");
+        LifePlan lifePlan = (LifePlan)getServletContext().getAttribute("lifePlan");
         List<Noda> leaves = lifePlan.getLeaves();
         Map<String, String> dayPlanMap = new HashMap<>();
         String date = request.getParameter("Date");
@@ -41,7 +56,7 @@ public class SetLeafPlanServlet extends HttpServlet {
         DayPlan dayPlan = new DayPlan(dayPlanMap);
         lifePlan.fillPlanOfLeaves(dayPlan);
         Model model = new Model(dayPlanMap);
-        getServletConfig().getServletContext().setAttribute("model", model);
+        getServletContext().setAttribute("model", model);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/Ctrl?name=save");
         requestDispatcher.forward(request, response);
     }

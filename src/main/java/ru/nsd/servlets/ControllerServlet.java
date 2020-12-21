@@ -1,6 +1,7 @@
 package ru.nsd.servlets;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.web.context.ServletContextAware;
 import ru.nsd.DayPlan;
 import ru.nsd.LifePlan;
 import ru.nsd.Model;
@@ -15,16 +16,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ControllerServlet extends HttpServlet {
+public class ControllerServlet extends HttpServlet implements ServletContextAware {
 
     ModelService modelService = new ModelService();
+    ServletContext servletContext;
     Model model;
     LifePlan lifePlan;
 
-    public void init(ServletConfig servletConfig) throws ServletException {
-        super.init(servletConfig);
-        lifePlan = (LifePlan) getServletConfig().getServletContext().getAttribute("lifePlan");
-    }
+
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
     }
@@ -32,14 +31,15 @@ public class ControllerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String action = request.getParameter("name");
         switch (action) {
-            case ("/save"):
-                model = (Model) getServletConfig().getServletContext().getAttribute("model");
+            case ("save"):
+                model = (Model) getServletContext().getAttribute("model");
                 modelService.insert(model);
+                lifePlan = (LifePlan) getServletContext().getAttribute("lifePlan");
                 request.setAttribute("leaves", lifePlan.getLeaves());
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("lifePlanInput.jsp");
                 requestDispatcher.forward(request, response);
                 break;
-            case ("/get"):
+            case ("get"):
                 if(lifePlan == null){
                     return; /// EXCEPTION
                 }
@@ -81,5 +81,13 @@ public class ControllerServlet extends HttpServlet {
                 inStream.close();
                 outStream.close();
         }
+    }
+    @Override
+    public void setServletContext(ServletContext servletContext){
+        this.servletContext = servletContext;
+    }
+
+    public ServletContext getServletContext(){
+        return servletContext;
     }
 }

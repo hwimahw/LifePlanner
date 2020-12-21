@@ -25,14 +25,18 @@ public class ConverterNumeralController {
     ApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
     Map<String, Servlet> mappingHolder = (Map<String, Servlet>)applicationContext.getBean("mappingHolder");
 
-    @PostMapping("/Ctrl")
-    public void processRequest(@RequestParam MultipartFile file) throws Exception {
-            String str = "aa";
-        //        String name = request.getParameter("name");
-//        Servlet servlet = mappingHolder.get(name);
-//        Part filePart = request.getPart("file");
-//
-//        servlet.service(request, response);
+    @RequestMapping("/Ctrl")
+    public void processRequest(@RequestParam(required = false) MultipartFile file,
+                               HttpServletRequest request,
+                               HttpServletResponse response) throws Exception {
+        String str = "aa";
+        String stgr = request.getQueryString();
+        String name = request.getParameter("name");
+        Servlet servlet = mappingHolder.get(name);
+        if(file != null) {
+            request.setAttribute("file", file);
+        }
+        servlet.service(request, response);
     }
 
 
