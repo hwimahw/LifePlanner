@@ -29,7 +29,8 @@
         <input type="hidden" name="name" value="setLeafPlan" size="40">
         <p><input type="submit" value="Save"></p>
     </form>
-    <form action="/Ctrl?name=get" method="get" enctype="multipart/form-data">
+    <form action="/Ctrl?name=get" method="get" enctype="text/plain">
+        <input type="hidden" name="name" value="get" size="40">
         <p><button type="submit" id="btn_get">Get LifePlan</button></p>
     </form>
 </c:if>

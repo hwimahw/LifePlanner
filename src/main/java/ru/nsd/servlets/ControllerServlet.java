@@ -40,6 +40,7 @@ public class ControllerServlet extends HttpServlet implements ServletContextAwar
                 requestDispatcher.forward(request, response);
                 break;
             case ("get"):
+                lifePlan = (LifePlan) getServletContext().getAttribute("lifePlan");
                 if(lifePlan == null){
                     return; /// EXCEPTION
                 }
