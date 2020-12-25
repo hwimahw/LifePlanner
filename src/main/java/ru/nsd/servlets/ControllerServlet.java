@@ -1,10 +1,10 @@
 package ru.nsd.servlets;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.web.context.ServletContextAware;
 import ru.nsd.DayPlan;
 import ru.nsd.LifePlan;
 import ru.nsd.Model;
+import ru.nsd.exceptions.NoLifePlanException;
 import ru.nsd.services.ModelService;
 
 import javax.servlet.*;
@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +41,7 @@ public class ControllerServlet extends HttpServlet implements ServletContextAwar
             case ("get"):
                 lifePlan = (LifePlan) getServletContext().getAttribute("lifePlan");
                 if(lifePlan == null){
-                    return; /// EXCEPTION
+                    throw new NoLifePlanException("LifePlan is not defined");
                 }
                 List<Map<String, String>> dayPlans = modelService.select(lifePlan);
                 if (dayPlans != null) {
@@ -67,7 +66,6 @@ public class ControllerServlet extends HttpServlet implements ServletContextAwar
                 response.setContentType(mimeType);
                 response.setContentLength((int)downloadFile.length());
 
-                // forces download
                 String headerKey = "Content-Disposition";
                 String headerValue = String.format("attachment; filename=\"%s\"", downloadFile.getName());
                 response.setHeader(headerKey, headerValue);

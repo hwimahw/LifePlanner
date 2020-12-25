@@ -1,8 +1,11 @@
 package ru.nsd.servlets;
 
+import org.springframework.beans.ConversionNotSupportedException;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @MultipartConfig
-@Component("upload")
 public class UploadFileServlet extends HttpServlet implements ServletContextAware, ServletConfigAware {
 
     private LifePlan lifePlan;
@@ -34,6 +36,7 @@ public class UploadFileServlet extends HttpServlet implements ServletContextAwar
         lifePlan = new LifePlan(fileContent);
         getServletContext().setAttribute("lifePlan", lifePlan);
         request.setAttribute("leaves", lifePlan.getLeaves());
+        request.setAttribute("aaa", lifePlan.getObject());
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("lifePlanInput.jsp");
         requestDispatcher.forward(request, response);
     }
