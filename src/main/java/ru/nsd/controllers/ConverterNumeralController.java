@@ -20,17 +20,16 @@ import javax.xml.ws.Service;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/*")
+@RequestMapping("/")
 public class ConverterNumeralController {
 
-    ApplicationContext applicationContext = ContextLoader.getCurrentWebApplicationContext();
-    Map<String, Servlet> mappingHolder = (Map<String, Servlet>) applicationContext.getBean("mappingHolder");
+    Map<String,Servlet> mappingHolder = (Map<String, Servlet>)ContextLoader.getCurrentWebApplicationContext().getBean("mappingHolder");
+
 
     @RequestMapping("/Ctrl")
     public void processRequest(@RequestParam(required = false) MultipartFile file,
                                  HttpServletRequest request,
                                  HttpServletResponse response) throws Exception {
-
         String name = request.getParameter("name");
         Servlet servlet = mappingHolder.get(name);
         if (file != null) {
