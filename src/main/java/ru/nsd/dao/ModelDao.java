@@ -1,4 +1,5 @@
 package ru.nsd.dao;
+import org.springframework.stereotype.Component;
 import ru.nsd.*;
 
 import java.sql.*;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class ModelDao {
     public void create(List<Noda> leaves){ // Названия листьев в xml файле должны соответствовать тому, как мы хотим назвать колонки таблицы в БД
         String sql = "create table lifeplan ( ";

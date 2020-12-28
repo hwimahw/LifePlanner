@@ -1,5 +1,6 @@
 package ru.nsd.servlets;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.ServletContextAware;
 import ru.nsd.DayPlan;
 import ru.nsd.LifePlan;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component("setLeafPlan")
 public class SetLeafPlanServlet extends HttpServlet implements ServletContextAware {
 
     ServletContext servletContext;

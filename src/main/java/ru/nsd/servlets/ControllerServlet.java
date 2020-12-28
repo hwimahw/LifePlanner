@@ -1,5 +1,7 @@
 package ru.nsd.servlets;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.ServletContextAware;
 import ru.nsd.DayPlan;
 import ru.nsd.LifePlan;
@@ -15,14 +17,14 @@ import java.io.*;
 import java.util.List;
 import java.util.Map;
 
+@Component("controller")
 public class ControllerServlet extends HttpServlet implements ServletContextAware {
 
-    ModelService modelService = new ModelService();
+    @Autowired
+    ModelService modelService;
     ServletContext servletContext;
     Model model;
     LifePlan lifePlan;
-
-
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
     }

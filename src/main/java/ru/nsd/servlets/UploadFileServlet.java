@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @MultipartConfig
+@Component("upload")
 public class UploadFileServlet extends HttpServlet implements ServletContextAware, ServletConfigAware {
 
     private LifePlan lifePlan;

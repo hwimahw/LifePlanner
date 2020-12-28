@@ -1,5 +1,7 @@
 package ru.nsd.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.nsd.LifePlan;
 import ru.nsd.Model;
 import ru.nsd.Noda;
@@ -8,8 +10,10 @@ import ru.nsd.dao.ModelDao;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class ModelService {
-    ModelDao modelDao = new ModelDao();
+    @Autowired
+    ModelDao modelDao;
 
     public void createTable(List<Noda> leaves){
         modelDao.create(leaves);
