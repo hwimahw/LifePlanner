@@ -37,7 +37,7 @@ public class Manager {
                     DayPlan dayPlan = new DayPlan(subjectPlan);
                     lifePlan.fillPlanOfLeaves(dayPlan);
                     lifePlan.fillVisitNodesForPrinting();
-               //     lifePlan.printDayPlanToFile(); DATE????
+                    //     lifePlan.printDayPlanToFile(); DATE????
 
                 }
                 case (3): {

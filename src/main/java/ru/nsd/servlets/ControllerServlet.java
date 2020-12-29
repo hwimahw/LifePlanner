@@ -37,12 +37,12 @@ public class ControllerServlet extends HttpServlet implements ServletContextAwar
                 modelService.insert(model);
                 lifePlan = (LifePlan) getServletContext().getAttribute("lifePlan");
                 request.setAttribute("leaves", lifePlan.getLeaves());
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("lifePlanInput.jsp");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/lifePlanInput.jsp");
                 requestDispatcher.forward(request, response);
                 break;
             case ("get"):
                 lifePlan = (LifePlan) getServletContext().getAttribute("lifePlan");
-                if(lifePlan == null){
+                if (lifePlan == null) {
                     throw new NoLifePlanException("LifePlan is not defined");
                 }
                 List<Map<String, String>> dayPlans = modelService.select(lifePlan);
@@ -66,7 +66,7 @@ public class ControllerServlet extends HttpServlet implements ServletContextAwar
                 }
                 System.out.println("MIME type: " + mimeType);
                 response.setContentType(mimeType);
-                response.setContentLength((int)downloadFile.length());
+                response.setContentLength((int) downloadFile.length());
 
                 String headerKey = "Content-Disposition";
                 String headerValue = String.format("attachment; filename=\"%s\"", downloadFile.getName());
@@ -83,12 +83,13 @@ public class ControllerServlet extends HttpServlet implements ServletContextAwar
                 outStream.close();
         }
     }
+
     @Override
-    public void setServletContext(ServletContext servletContext){
+    public void setServletContext(ServletContext servletContext) {
         this.servletContext = servletContext;
     }
 
-    public ServletContext getServletContext(){
+    public ServletContext getServletContext() {
         return servletContext;
     }
 }

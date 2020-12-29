@@ -15,19 +15,17 @@ public class ModelService {
     @Autowired
     ModelDao modelDao;
 
-    public void createTable(List<Noda> leaves){
+    public void createTable(List<Noda> leaves) {
         modelDao.create(leaves);
     }
 
-    public void insert(Model data){
+    public void insert(Model data) {
         modelDao.insert(data);
     }
 
-    public List<Map<String, String>> select(LifePlan lifePlan){
+    public List<Map<String, String>> select(LifePlan lifePlan) {
         return modelDao.select(lifePlan);
     }
-
-
 
 
 }

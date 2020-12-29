@@ -8,7 +8,6 @@ import ru.nsd.Model;
 import ru.nsd.Noda;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,17 +32,17 @@ public class SetLeafPlanServlet extends HttpServlet implements ServletContextAwa
     }
 
     @Override
-    public void setServletContext(ServletContext servletContext){
+    public void setServletContext(ServletContext servletContext) {
         this.servletContext = servletContext;
 
     }
 
-    public ServletContext getServletContext(){
+    public ServletContext getServletContext() {
         return servletContext;
     }
 
-    protected void setLeafPlan(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        LifePlan lifePlan = (LifePlan)getServletContext().getAttribute("lifePlan");
+    protected void setLeafPlan(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        LifePlan lifePlan = (LifePlan) getServletContext().getAttribute("lifePlan");
         List<Noda> leaves = lifePlan.getLeaves();
         Map<String, String> dayPlanMap = new HashMap<>();
         String date = request.getParameter("Date");

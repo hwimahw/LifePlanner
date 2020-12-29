@@ -3,16 +3,17 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/util
-   		   http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+   		   http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <context:component-scan base-package="ru.nsd.dao"/>
+    <context:component-scan base-package="ru.nsd.services"/>
     <context:component-scan base-package="ru.nsd.servlets"/>
 
-    <bean id="upload" class = "ru.nsd.servlets.UploadFileServlet"/>
-    <bean id ="setLeafPlan" class = "ru.nsd.servlets.SetLeafPlanServlet"/>
-    <bean id ="controller" class = "ru.nsd.servlets.ControllerServlet"/>
+
 
     <util:map id="mappingHolder" map-class="java.util.HashMap">
         <entry key="upload" value-ref="upload"/>
@@ -20,5 +21,7 @@
         <entry key="save" value-ref="controller"/>
         <entry key="get" value-ref="controller"/>
     </util:map>
+
+
 
 </beans>

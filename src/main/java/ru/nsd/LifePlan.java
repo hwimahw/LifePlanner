@@ -8,7 +8,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +17,7 @@ public class LifePlan {
 
     private List<Noda> leaves;
 
-    Object object= new Object();
+    Object object = new Object();
 
     public LifePlan() {
         leaves = new ArrayList<>();

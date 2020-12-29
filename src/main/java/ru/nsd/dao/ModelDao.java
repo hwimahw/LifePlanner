@@ -1,6 +1,8 @@
 package ru.nsd.dao;
+
 import org.springframework.stereotype.Component;
 import ru.nsd.*;
+import ru.nsd.exceptions.InsertInDataBaseException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,9 +12,9 @@ import java.util.Map;
 
 @Component
 public class ModelDao {
-    public void create(List<Noda> leaves){ // Названия листьев в xml файле должны соответствовать тому, как мы хотим назвать колонки таблицы в БД
+    public void create(List<Noda> leaves) {
         String sql = "create table lifeplan ( ";
-        for(Noda leaf:leaves){
+        for (Noda leaf : leaves) {
             sql = sql + leaf.getName() + " varchar(60), ";
         }
         sql = changeLastCommaIntoGap(sql) + ")";
@@ -20,17 +22,19 @@ public class ModelDao {
             Connection conn = ConnectionFactory.getConnection();
             Statement stmt = conn.createStatement();
             stmt.execute(sql);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
     }
 
-    public void insert(Model data){ // Названия листьев в xml файле должны соответствовать тому, как мы хотим назвать колонки таблицы в БД
+    // Названия листьев в xml файле должны соответствовать тому,
+    // как мы хотим назвать колонки таблицы в БД
+    public void insert(Model data){
         String sql1 = "insert into lifeplan ( ";
         String sql2 = "(";
         Map<String, String> dayPlan = data.getDayPlan();
-        for(Map.Entry entry:dayPlan.entrySet()){
+        for (Map.Entry entry : dayPlan.entrySet()) {
             sql1 = sql1 + entry.getKey() + ",";
             sql2 = sql2 + "?, ";
         }
@@ -41,17 +45,17 @@ public class ModelDao {
             Connection conn = ConnectionFactory.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             int i = 1;
-            for(Map.Entry<String, String> entry:dayPlan.entrySet()){
+            for (Map.Entry<String, String> entry : dayPlan.entrySet()) {
                 stmt.setString(i, entry.getValue());
                 i++;
             }
             stmt.executeUpdate();
-        }catch(SQLException ex){
-            ex.printStackTrace();
+        } catch (SQLException ex) {
+            throw new InsertInDataBaseException("DataBase Exception");
         }
     }
 
-    public List<Map<String, String>> select(LifePlan lifePlan){ // Названия листьев в xml файле должны соответствовать тому, как мы хотим назвать колонки таблицы в БД
+    public List<Map<String, String>> select(LifePlan lifePlan) {
         List<Map<String, String>> dayPlans = null;
         String sql = "select * from lifeplan";
         try {
@@ -60,20 +64,20 @@ public class ModelDao {
             ResultSet resultSet = stmt.executeQuery(sql);
             ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             dayPlans = new ArrayList<>();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 Map<String, String> dayPlan = new HashMap<>();
-                for(int i = 1; i <= lifePlan.getLeaves().size(); i++){
+                for (int i = 1; i <= lifePlan.getLeaves().size(); i++) {
                     dayPlan.put(resultSetMetaData.getColumnName(i), resultSet.getString(i));
                 }
                 dayPlans.add(dayPlan);
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return dayPlans;
     }
 
-    private String changeLastCommaIntoGap(String sql){
+    private String changeLastCommaIntoGap(String sql) {
         int lastIndexOfComma = sql.lastIndexOf(',');
         char[] array = sql.toCharArray();
         array[lastIndexOfComma] = ' ';
