@@ -50,9 +50,7 @@ public class ControllerServlet extends HttpServlet implements ServletContextAwar
                     for (Map<String, String> dayPlan : dayPlans) {
                         lifePlan.fillNonVisitNodes();
                         DayPlan dPl = new DayPlan(dayPlan);
-                        lifePlan.fillPlanOfLeaves(dPl);
-                        lifePlan.fillVisitNodesForPrinting();
-                        lifePlan.printDayPlanToFile(dayPlan.get("DATE"));
+                        lifePlan.addDayPlan(dPl, dayPlan.get("DATE"));
                     }
                 }
                 String filePath = "out.txt";

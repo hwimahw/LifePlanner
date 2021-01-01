@@ -24,13 +24,14 @@ public class LifePlan {
         buildLifePlan();
     }
 
-    public Object getObject() {
-        return object;
-    }
 
     public LifePlan(InputStream inputStream) {
         leaves = new ArrayList<>();
         buildLifePlan(inputStream);
+    }
+
+    public Object getObject() {
+        return object;
     }
 
     public Noda getRoot() {
@@ -45,7 +46,7 @@ public class LifePlan {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = factory.newDocumentBuilder();
-            Document doc = docBuilder.parse(getClass().getResourceAsStream("/ru/nsd/lifePlan.xml"));
+            Document doc = docBuilder.parse(getClass().getResourceAsStream("./src/test/resources/lifePlan.xml"));
             this.setRoot(new Noda(doc.getDocumentElement().getAttribute("name"), null));
             buildLifePlanIter(doc.getDocumentElement(), this.root);
         } catch (Exception e) {
@@ -93,11 +94,17 @@ public class LifePlan {
         }
     }
 
+    public void addDayPlan(DayPlan dayPlan, String date){
+        fillPlanOfLeaves(dayPlan);
+        fillVisitNodesForPrinting();
+        printDayPlanToFile(date);
+    }
+
     public void print() {
         printLifePlanIter(this.root, "");
     }
 
-    public void printLifePlanIter(Noda noda, String gaps) {
+    private void printLifePlanIter(Noda noda, String gaps) {
         System.out.println(gaps + noda.getName());
         gaps = gaps + "   ";
         List<Noda> children = noda.getChildren();
@@ -106,7 +113,7 @@ public class LifePlan {
         }
     }
 
-    public void fillVisitNodesForPrinting() {
+    private void fillVisitNodesForPrinting() {
         List<Noda> leaves = this.leaves;
         for (int i = 0; i < leaves.size(); i++) {
             if (leaves.get(i).getPlan() != null) {
@@ -160,7 +167,7 @@ public class LifePlan {
 
     }
 
-    public void printDayPlanToFileIter(Noda noda, BufferedWriter bufferedWriter, String gaps) {
+    private void printDayPlanToFileIter(Noda noda, BufferedWriter bufferedWriter, String gaps) {
         try {
             if (noda.getVisit() == 1) {
                 bufferedWriter.write(gaps + noda.getName() + "\n");
@@ -180,6 +187,12 @@ public class LifePlan {
 
 
     public static void main(String[] args) {
+        try {
+            FileInputStream fileInputStream = new FileInputStream("src/main/resources/ru.nsd/lifePlan.xml");
+        }catch(FileNotFoundException ex){
+            System.out.println(11111);
+            return;
+        }
         LifePlan lifePlan = new LifePlan();
         lifePlan.print();
     }

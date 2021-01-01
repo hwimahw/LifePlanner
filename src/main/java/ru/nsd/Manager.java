@@ -25,6 +25,7 @@ public class Manager {
                 case (2): {
                     Map<String, String> subjectPlan = new HashMap<>();
                     scanner.nextLine();
+                    String date = scanner.nextLine();
                     while (exit == 0) {
                         String subjectPlanString = scanner.nextLine();
                         if (subjectPlanString.contains("/")) {
@@ -35,10 +36,7 @@ public class Manager {
                         subjectPlan.put(split[0], split[1]);
                     }
                     DayPlan dayPlan = new DayPlan(subjectPlan);
-                    lifePlan.fillPlanOfLeaves(dayPlan);
-                    lifePlan.fillVisitNodesForPrinting();
-                    //     lifePlan.printDayPlanToFile(); DATE????
-
+                    lifePlan.addDayPlan(dayPlan, date);
                 }
                 case (3): {
                     exit = 1;

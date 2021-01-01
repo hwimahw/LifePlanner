@@ -1,0 +1,14 @@
+-----------------------------------------------------------
+01.01.2021
+
+Self-development
+  Study
+    Computer Science
+      Algorithms
+        plan1
+  Sport
+    Football
+      Physiques
+        plan2
+  Other
+    plan3
