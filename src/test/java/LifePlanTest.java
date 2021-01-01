@@ -81,8 +81,6 @@ public class LifePlanTest {
         }
         File file = new File("out.txt");
         file.delete();
-        Object[] arr = (Object[])new String[10];
-        arr[0] = new String("2222");
         assertEquals(outContentExpected, outContentActual);
 
     }
