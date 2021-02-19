@@ -3,10 +3,7 @@ package ru.nsd.controllers;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,16 +16,34 @@ import java.io.IOException;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/Ctrl")
 public class ConverterNumeralController {
 
     Map<String, Servlet> mappingHolder = (Map<String, Servlet>) ContextLoader.getCurrentWebApplicationContext().getBean("mappingHolder");
 
 
-    @RequestMapping("/Ctrl")
+    @RequestMapping("/process")
     public void processRequest(@RequestParam(required = false) MultipartFile file,
                                HttpServletRequest request,
                                HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("name");
+        Servlet servlet = mappingHolder.get(name);
+        if (file != null) {
+            request.setAttribute("file", file);
+        }
+        servlet.service(request, response);
+    }
+
+    @RequestMapping("/Ctrl/lifePlan")
+    public String processRequest(HttpServletRequest request,
+                               HttpServletResponse response) throws ServletException, IOException {
+        return "lifePlanInput";
+    }
+
+    @RequestMapping("/{id}")
+    public void process(@RequestParam(required = false) MultipartFile file,
+                        HttpServletRequest request,
+                        HttpServletResponse response, @PathVariable("id") String id) throws ServletException, IOException {
         String name = request.getParameter("name");
         Servlet servlet = mappingHolder.get(name);
         if (file != null) {

@@ -1,10 +1,10 @@
-package ru.nsd.dao;
+package ru.nsd.models;
 
 import java.util.Date;
 
-public class IdeaDao {
+public class Idea {
 
-    public IdeaDao(String idea, Date date){
+    public Idea(Date date, String idea){
         this.idea = idea;
         this.date = date;
     }
@@ -13,5 +13,11 @@ public class IdeaDao {
 
     private Date date;
 
+    public String getIdea() {
+        return idea;
+    }
 
+    public Date getDate() {
+        return date;
+    }
 }

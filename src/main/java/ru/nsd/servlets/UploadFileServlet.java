@@ -43,7 +43,7 @@ public class UploadFileServlet extends HttpServlet implements ServletContextAwar
         lifePlan = new LifePlan(fileContent);
         getServletContext().setAttribute("lifePlan", lifePlan);
         request.setAttribute("leaves", lifePlan.getLeaves());
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/lifePlanInput.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Ctrl/lifePlan");
         requestDispatcher.forward(request, response);
     }
 
