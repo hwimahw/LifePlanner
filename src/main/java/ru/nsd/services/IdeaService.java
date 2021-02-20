@@ -22,4 +22,9 @@ public class IdeaService {
         ideaDao.getIdeas(request, response);
     }
 
+    public void getIdeasByDate(HttpServletRequest request, HttpServletResponse response,
+                        String date){
+        ideaDao.getIdeasByDate(request, response, date);
+    }
+
 }

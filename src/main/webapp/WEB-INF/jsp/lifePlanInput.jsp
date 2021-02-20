@@ -56,7 +56,12 @@
 </c:if>
 
 <form method="get" action="/Ideas">
-    <p><button type="submit" id="ideas">All ideas</button></p>
+    <p><button type="submit" id="ideas_btn">All ideas</button></p>
+</form>
+
+<form method="get" action="/Ideas/" onsubmit="this.action = this.action + this.date_ideas.value">
+    <input type="text" name="date" id="date_ideas" size= "40">
+    <p><button type="submit" id="idea_btn">IdeasByDate</button></p>
 </form>
 
 

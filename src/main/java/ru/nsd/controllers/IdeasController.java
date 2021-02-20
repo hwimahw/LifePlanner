@@ -3,6 +3,7 @@ package ru.nsd.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.nsd.services.IdeaService;
 
@@ -19,5 +20,11 @@ public class IdeasController {
     @GetMapping()
     public void getIdeas(HttpServletRequest request, HttpServletResponse response){
         ideaService.getIdeas(request, response);
+    }
+
+    @GetMapping("/{date}")
+    public void getIdea(@PathVariable("date") String date,
+            HttpServletRequest request, HttpServletResponse response){
+        ideaService.getIdeasByDate(request, response, date);
     }
 }

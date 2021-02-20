@@ -8,6 +8,7 @@ import ru.nsd.LifePlan;
 import ru.nsd.Model;
 import ru.nsd.exceptions.NoLifePlanException;
 import ru.nsd.services.ModelService;
+import ru.nsd.utils.FileUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServlet;
@@ -53,32 +54,7 @@ public class ControllerServlet extends HttpServlet implements ServletContextAwar
                         lifePlan.addDayPlan(dPl, dayPlan.get("DATE"));
                     }
                 }
-                String filePath = "out.txt";
-                File downloadFile = new File(filePath);
-                downloadFile.createNewFile();
-                FileInputStream inStream = new FileInputStream(downloadFile);
-                ServletContext context = getServletContext();
-                String mimeType = context.getMimeType(filePath);
-                if (mimeType == null) {
-                    mimeType = "application/octet-stream";
-                }
-                System.out.println("MIME type: " + mimeType);
-                response.setContentType(mimeType);
-                response.setContentLength((int) downloadFile.length());
-
-                String headerKey = "Content-Disposition";
-                String headerValue = String.format("attachment; filename=\"%s\"", downloadFile.getName());
-                response.setHeader(headerKey, headerValue);
-
-                OutputStream outStream = response.getOutputStream();
-                byte[] byteArray = new byte[4096];
-                int bytesRead = -1;
-                //byte[] byteArray = FileUtils.readFileToByteArray(new File("out.txt"));
-                while ((bytesRead = inStream.read(byteArray)) != -1) {
-                    outStream.write(byteArray, 0, bytesRead);
-                }
-                inStream.close();
-                outStream.close();
+                FileUtils.sendFile(request, response, "out.txt");
         }
     }
 
