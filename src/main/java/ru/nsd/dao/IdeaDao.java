@@ -57,10 +57,6 @@ public class IdeaDao {
         }
     }
 
-    private void sendFile(HttpServletRequest request, HttpServletResponse response){
-
-    }
-
     private void printIdeasToFile(List<Idea> ideas, String nameOfFile) {
         File file = new File(nameOfFile);
         FileWriter fileWriter = null;
@@ -82,6 +78,19 @@ public class IdeaDao {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+    }
+
+    public void setIdea(Idea idea){
+        try {
+            Connection connection = ConnectionFactory.getConnection();
+            PreparedStatement statement = connection.prepareStatement("insert into TABLE_IDEAS values (?, ?)");
+            statement.setDate(1, idea.getDate());
+            statement.setString(2, idea.getIdea());
+            statement.executeUpdate();
+        }catch (Exception e){
+
         }
 
     }

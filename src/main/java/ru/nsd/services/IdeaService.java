@@ -27,4 +27,8 @@ public class IdeaService {
         ideaDao.getIdeasByDate(request, response, date);
     }
 
+    public void setIdea(Idea idea) {
+        ideaDao.setIdea(idea);
+    }
+
 }

@@ -44,15 +44,6 @@
     </form>
 
 
-
-
-    <form method="get" action="/Ctrl/" onsubmit="this.action = this.action + this.date.value">
-        <p><b><c:out value="Дата"/></b><br>
-        <input type="text" id="date" name="date" size= "40">
-        <p><b><c:out value="Мысль/Идея"/></b><br>
-        <input type="text" name="thought" size= "40">
-        <p><button type="submit" id="aaa">Get</button></p>
-    </form>
 </c:if>
 
 <form method="get" action="/Ideas">
@@ -62,6 +53,14 @@
 <form method="get" action="/Ideas/" onsubmit="this.action = this.action + this.date_ideas.value">
     <input type="text" name="date" id="date_ideas" size= "40">
     <p><button type="submit" id="idea_btn">IdeasByDate</button></p>
+</form>
+
+<form method="post" action="/Ideas">
+    <p><b><c:out value="Дата"/></b><br>
+        <input type="text" id="date" name="date" size= "40">
+    <p><b><c:out value="Мысль/Идея"/></b><br>
+        <input type="text" name="idea" size= "40">
+    <p><button type="submit" id="idea_thought_btn">Get</button></p>
 </form>
 
 

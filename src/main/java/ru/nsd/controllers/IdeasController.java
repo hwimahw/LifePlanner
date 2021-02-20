@@ -2,9 +2,8 @@ package ru.nsd.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.nsd.models.Idea;
 import ru.nsd.services.IdeaService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,5 +25,11 @@ public class IdeasController {
     public void getIdea(@PathVariable("date") String date,
             HttpServletRequest request, HttpServletResponse response){
         ideaService.getIdeasByDate(request, response, date);
+    }
+
+    @PostMapping()
+    public String setIdea(@ModelAttribute Idea idea){
+        ideaService.setIdea(idea);
+        return "lifePlanInput";
     }
 }
