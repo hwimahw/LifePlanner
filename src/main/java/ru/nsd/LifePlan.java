@@ -3,6 +3,8 @@ package ru.nsd;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import ru.nsd.exceptions.InvalidXmlFileException;
+import ru.nsd.exceptions.NoLifePlanException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -25,9 +27,13 @@ public class LifePlan {
     }
 
 
-    public LifePlan(InputStream inputStream) {
+    public LifePlan(InputStream inputStream) throws InvalidXmlFileException {
         leaves = new ArrayList<>();
-        buildLifePlan(inputStream);
+        try {
+            buildLifePlan(inputStream);
+        }catch(InvalidXmlFileException ex){
+            throw ex;
+        }
     }
 
     public Object getObject() {
@@ -54,7 +60,7 @@ public class LifePlan {
         }
     }
 
-    private void buildLifePlan(InputStream inputStream) {
+    private void buildLifePlan(InputStream inputStream) throws InvalidXmlFileException{
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = factory.newDocumentBuilder();
@@ -62,7 +68,7 @@ public class LifePlan {
             this.setRoot(new Noda(doc.getDocumentElement().getAttribute("name"), null));
             buildLifePlanIter(doc.getDocumentElement(), this.root);
         } catch (Exception e) {
-            return;
+            throw new InvalidXmlFileException("XML is invalid");
         }
     }
 
@@ -185,19 +191,8 @@ public class LifePlan {
 
     }
 
-
-    public static void main(String[] args) {
-        try {
-            FileInputStream fileInputStream = new FileInputStream("src/main/resources/ru.nsd/lifePlan.xml");
-        }catch(FileNotFoundException ex){
-            System.out.println(11111);
-            return;
-        }
-        LifePlan lifePlan = new LifePlan();
-        lifePlan.print();
-    }
-
     public List<Noda> getLeaves() {
         return leaves;
     }
+
 }
