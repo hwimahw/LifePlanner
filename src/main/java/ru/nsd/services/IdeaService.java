@@ -18,8 +18,8 @@ public class IdeaService {
         this.ideaDao = ideaDao;
     }
 
-    public void getIdeas(HttpServletRequest request, HttpServletResponse response){
-        ideaDao.getIdeas(request, response);
+    public void getAllIdeas(HttpServletRequest request, HttpServletResponse response){
+        ideaDao.getAllIdeas(request, response);
     }
 
     public void getIdeasByDate(HttpServletRequest request, HttpServletResponse response,

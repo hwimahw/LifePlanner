@@ -19,7 +19,7 @@ import java.util.List;
 public class IdeaDao {
 
 
-    public void getIdeas(HttpServletRequest request, HttpServletResponse response) {
+    public void getAllIdeas(HttpServletRequest request, HttpServletResponse response) {
         try {
             Connection connection = ConnectionFactory.getConnection();
             Statement statement = connection.createStatement();
@@ -46,12 +46,11 @@ public class IdeaDao {
             ResultSet resultSet = statement.executeQuery();
             List<Idea> ideas = new ArrayList<>();
             while(resultSet.next()){
-                Idea idea = new Idea(resultSet.getDate(1), resultSet.getString(2));
+                Idea idea = new Idea(resultSet.getDate(2), resultSet.getString(3));
                 ideas.add(idea);
             }
             printIdeasToFile(ideas, "IdeasByDate.txt");
-            FileUtils.sendFile(request, response, "ideasByDate.txt");
-
+            FileUtils.sendFile(request, response, "IdeasByDate.txt");
         } catch (SQLException ex) {
 
         }
@@ -85,9 +84,10 @@ public class IdeaDao {
     public void setIdea(Idea idea){
         try {
             Connection connection = ConnectionFactory.getConnection();
-            PreparedStatement statement = connection.prepareStatement("insert into TABLE_IDEAS values (?, ?)");
-            statement.setDate(1, idea.getDate());
-            statement.setString(2, idea.getIdea());
+            PreparedStatement statement = connection.prepareStatement("insert into TABLE_IDEAS values (?, ?, ?)");
+            statement.setInt(1, idea.getId());
+            statement.setDate(2, idea.getDate());
+            statement.setString(3, idea.getIdea());
             statement.executeUpdate();
         }catch (Exception e){
 

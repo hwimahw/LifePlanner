@@ -5,9 +5,12 @@ import java.sql.Date;
 
 public class Idea {
 
+    private static int id = 0;
+
     public Idea(Date date, String idea){
         this.idea = idea;
         this.date = date;
+        ++id;
     }
 
     private String idea;
@@ -20,5 +23,9 @@ public class Idea {
 
     public Date getDate() {
         return date;
+    }
+
+    public static int getId() {
+        return id;
     }
 }

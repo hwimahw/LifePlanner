@@ -17,19 +17,25 @@ public class IdeasController {
     IdeaService ideaService;
 
     @GetMapping()
-    public void getIdeas(HttpServletRequest request, HttpServletResponse response){
-        ideaService.getIdeas(request, response);
+    public void getAllIdeas(HttpServletRequest request, HttpServletResponse response){
+        ideaService.getAllIdeas(request, response);
     }
 
     @GetMapping("/{date}")
-    public void getIdea(@PathVariable("date") String date,
+    public String getIdeasByDate(@PathVariable("date") String date,
             HttpServletRequest request, HttpServletResponse response){
         ideaService.getIdeasByDate(request, response, date);
+        return "ideas/ideasForm";
+    }
+
+    @GetMapping("/new")
+    public String newIdeaForm(){
+        return "ideas/ideasForm";
     }
 
     @PostMapping()
     public String setIdea(@ModelAttribute Idea idea){
         ideaService.setIdea(idea);
-        return "lifePlanInput";
+        return "ideas/ideasForm";
     }
 }

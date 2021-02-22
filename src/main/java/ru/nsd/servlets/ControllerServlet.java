@@ -38,7 +38,7 @@ public class ControllerServlet extends HttpServlet implements ServletContextAwar
                 modelService.insert(model);
                 lifePlan = (LifePlan) getServletContext().getAttribute("lifePlan");
                 request.setAttribute("leaves", lifePlan.getLeaves());
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/lifePlanInput.jsp");
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/jsp/lifePlan/lifePlanInput.jsp");
                 requestDispatcher.forward(request, response);
                 break;
             case ("get"):
