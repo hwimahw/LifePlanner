@@ -41,9 +41,9 @@
 <p>
 <div class="block2">
     <h1>Записанные идеи по дате</h1>
-    <form method="get" action="/Ideas/" onsubmit="this.action = this.action + this.date_ideas.value; refresh()">
+    <form method="get" id="form" onsubmit="urlBuild()">
     <p><b><c:out value="Дата"/></b></p>
-        <input type="text" id="date_ideas" size= "40">
+        <input type="text" id="date_ideas" name="date_ideas" size= "40">
     <p><button type="submit" id="idea_btn">OK</button></p>
 </form>
 </div>
@@ -55,8 +55,10 @@
     </form>
 </div>
 <script>
-    function refresh() {
-        window.opener.location.reload();
+    function urlBuild() {
+        var action_src = "/Ideas/" + document.getElementsByName("date_ideas")[0].value;
+        var form = document.getElementById('form');
+        form.action = action_src;
     }
 </script>
 </body>

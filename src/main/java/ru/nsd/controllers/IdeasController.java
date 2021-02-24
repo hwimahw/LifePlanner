@@ -33,8 +33,8 @@ public class IdeasController {
         return "ideas/ideasForm";
     }
 
-    @PostMapping()
-    public String setIdea(@ModelAttribute Idea idea){
+    @GetMapping("/aa")
+    public String setIdea(@ModelAttribute("idea") Idea idea){
         ideaService.setIdea(idea);
         return "ideas/ideasForm";
     }

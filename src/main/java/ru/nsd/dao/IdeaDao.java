@@ -26,7 +26,7 @@ public class IdeaDao {
             ResultSet resultSet = statement.executeQuery("select * from TABLE_IDEAS");
             List<Idea> ideas = new ArrayList<>();
             while(resultSet.next()){
-                Idea idea = new Idea(resultSet.getDate(1), resultSet.getString(2));
+                Idea idea = new Idea(resultSet.getDate(2), resultSet.getString(3));
                 ideas.add(idea);
             }
             printIdeasToFile(ideas, "AllIdeas.txt");
