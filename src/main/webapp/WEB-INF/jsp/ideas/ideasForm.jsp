@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <head>
-    <title>Планировщик задач - LifePlanner</title>
+    <title>Идеи/Мысли</title>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style type="text/css">
@@ -17,6 +17,11 @@
             padding: 10px;
         }
         .block3
+        {
+            border-style:solid;
+            padding: 10px;
+        }
+        .block4
         {
             border-style:solid;
             padding: 10px;
@@ -41,7 +46,7 @@
 <p>
 <div class="block2">
     <h1>Записанные идеи по дате</h1>
-    <form method="get" id="form" onsubmit="urlBuild()">
+    <form method="get" id="form" onsubmit="urlBuild('date_ideas')">
     <p><b><c:out value="Дата"/></b></p>
         <input type="text" id="date_ideas" name="date_ideas" size= "40">
     <p><button type="submit" id="idea_btn">OK</button></p>
@@ -54,13 +59,26 @@
         <p><button type="submit" id="ideas_btn">OK</button></p>
     </form>
 </div>
+<p>
+<div class="block4">
+    <h1>Редактировать мысль</h1>
+    <form method="post" id="edit_form" onsubmit="urlBuild('id')">
+        <p><b><c:out value="Номер (id)"/></b></p>
+        <input type="hidden" name="_method" value="PATCH">
+        <input type="text" id="id" name="id" size= "40">
+        <input type="text" id="new_idea" name="new_idea" size= "40">
+        <p><button type="submit" id="edit_btn">OK</button></p>
+    </form>
+</div>
 <script>
-    function urlBuild() {
-        var action_src = "/Ideas/" + document.getElementsByName("date_ideas")[0].value;
+    function urlBuild(element) {
+        var action_src = "/Ideas/" + document.getElementsByName(element)[0].value;
         var form = document.getElementById('form');
         form.action = action_src;
     }
 </script>
+</form>
+</div>
 </body>
 
 </html>

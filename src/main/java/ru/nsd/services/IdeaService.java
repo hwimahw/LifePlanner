@@ -31,4 +31,10 @@ public class IdeaService {
         ideaDao.setIdea(idea);
     }
 
+
+    public void editIdea(int id, Idea idea) {
+        ideaDao.editIdea(id, idea);
+    }
+
+
 }

@@ -94,4 +94,17 @@ public class IdeaDao {
         }
 
     }
+
+    public void editIdea(int id, Idea idea){
+        try {
+            Connection connection = ConnectionFactory.getConnection();
+            PreparedStatement statement = connection.prepareStatement("update TABLE_IDEAS set idea = ? where id = ?");
+            statement.setString (1, idea.getIdea());
+            statement.setInt(2, id);
+            statement.executeUpdate();
+        }catch (Exception e){
+
+        }
+
+    }
 }

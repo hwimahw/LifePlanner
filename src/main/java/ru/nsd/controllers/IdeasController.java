@@ -33,9 +33,15 @@ public class IdeasController {
         return "ideas/ideasForm";
     }
 
-    @GetMapping("/aa")
+    @PostMapping
     public String setIdea(@ModelAttribute("idea") Idea idea){
         ideaService.setIdea(idea);
+        return "ideas/ideasForm";
+    }
+
+    @PatchMapping()
+    public String editIdea(){
+      //  ideaService.editIdea(id, idea);
         return "ideas/ideasForm";
     }
 }
