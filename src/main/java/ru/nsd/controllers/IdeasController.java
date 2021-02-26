@@ -28,7 +28,7 @@ public class IdeasController {
         return "ideas/ideasForm";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/newg")
     public String newIdeaForm(){
         return "ideas/ideasForm";
     }
@@ -39,9 +39,9 @@ public class IdeasController {
         return "ideas/ideasForm";
     }
 
-    @PatchMapping()
-    public String editIdea(){
-      //  ideaService.editIdea(id, idea);
+    @DeleteMapping("/{ide}")
+    public String editIdea(@PathVariable("ide") String id, @RequestParam("sds") String idea){
+        ideaService.editIdea(Integer.parseInt(id), idea);
         return "ideas/ideasForm";
     }
 }

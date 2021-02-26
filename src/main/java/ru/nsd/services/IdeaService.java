@@ -32,7 +32,7 @@ public class IdeaService {
     }
 
 
-    public void editIdea(int id, Idea idea) {
+    public void editIdea(int id, String idea) {
         ideaDao.editIdea(id, idea);
     }
 

@@ -62,11 +62,11 @@
 <p>
 <div class="block4">
     <h1>Редактировать мысль</h1>
-    <form method="post" id="edit_form" onsubmit="urlBuild('id')">
+    <form method="post" id="edit_form" onsubmit="urlBuild('ide')">
         <p><b><c:out value="Номер (id)"/></b></p>
-        <input type="hidden" name="_method" value="PATCH">
-        <input type="text" id="id" name="id" size= "40">
-        <input type="text" id="new_idea" name="new_idea" size= "40">
+        <input type="hidden" name="_method" value="delete">
+        <input type="text" id="ide" name="ide" size= "40">
+        <input type="text" id="neggw" name="sds" size= "40">
         <p><button type="submit" id="edit_btn">OK</button></p>
     </form>
 </div>

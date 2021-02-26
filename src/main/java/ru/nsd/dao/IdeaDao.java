@@ -95,11 +95,11 @@ public class IdeaDao {
 
     }
 
-    public void editIdea(int id, Idea idea){
+    public void editIdea(int id, String idea){
         try {
             Connection connection = ConnectionFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement("update TABLE_IDEAS set idea = ? where id = ?");
-            statement.setString (1, idea.getIdea());
+            statement.setString (1, idea);
             statement.setInt(2, id);
             statement.executeUpdate();
         }catch (Exception e){
