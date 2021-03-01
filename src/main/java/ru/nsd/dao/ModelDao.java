@@ -3,6 +3,7 @@ package ru.nsd.dao;
 import org.springframework.stereotype.Component;
 import ru.nsd.*;
 import ru.nsd.exceptions.InsertInDataBaseException;
+import ru.nsd.exceptions.WorkWithDataBaseException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -72,7 +73,9 @@ public class ModelDao {
                 dayPlans.add(dayPlan);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            WorkWithDataBaseException e = new WorkWithDataBaseException("select exception");
+            e.initCause(ex);
+            throw e;
         }
         return dayPlans;
     }

@@ -15,7 +15,7 @@ public class ConnectionFactory {
         try {
             Class.forName(JDBC_DRIVER);
         } catch (Exception ex) {
-            throw new RuntimeException("Error connecting to the database", ex);
+            throw new RuntimeException("Error using jdbc driver", ex);
         }
     }
 

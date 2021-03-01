@@ -3,6 +3,8 @@ package ru.nsd.dao;
 import org.springframework.stereotype.Component;
 import ru.nsd.ConnectionFactory;
 import ru.nsd.Noda;
+import ru.nsd.exceptions.WorkWithDataBaseException;
+import ru.nsd.exceptions.WriteToFileException;
 import ru.nsd.models.Idea;
 import ru.nsd.utils.FileUtils;
 
@@ -33,7 +35,9 @@ public class IdeaDao {
             FileUtils.sendFile(request, response, "AllIdeas.txt");
 
         } catch (SQLException ex) {
-
+           WorkWithDataBaseException e = new WorkWithDataBaseException("get all ideas exception");
+           e.initCause(ex);
+           throw e;
         }
     }
 
@@ -52,7 +56,9 @@ public class IdeaDao {
             printIdeasToFile(ideas, "IdeasByDate.txt");
             FileUtils.sendFile(request, response, "IdeasByDate.txt");
         } catch (SQLException ex) {
-
+            WorkWithDataBaseException e = new WorkWithDataBaseException("get ideas by date exception");
+            e.initCause(ex);
+            throw e;
         }
     }
 
@@ -69,7 +75,7 @@ public class IdeaDao {
                 bufferedWriter.write(idea.getIdea() + "\n\n");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new WriteToFileException("Writing to file exception");
         } finally {
             try {
                 bufferedWriter.close();
@@ -89,7 +95,10 @@ public class IdeaDao {
             statement.setDate(2, idea.getDate());
             statement.setString(3, idea.getIdea());
             statement.executeUpdate();
-        }catch (Exception e){
+        }catch (SQLException ex){
+            WorkWithDataBaseException e = new WorkWithDataBaseException("set idea exception");
+            e.initCause(ex);
+            throw e;
 
         }
 
@@ -102,8 +111,10 @@ public class IdeaDao {
             statement.setString (1, idea);
             statement.setInt(2, id);
             statement.executeUpdate();
-        }catch (Exception e){
-
+        }catch (SQLException ex){
+            WorkWithDataBaseException e = new WorkWithDataBaseException("edit idea exception");
+            e.initCause(ex);
+            throw e;
         }
 
     }

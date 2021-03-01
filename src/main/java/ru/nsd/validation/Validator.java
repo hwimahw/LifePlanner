@@ -11,7 +11,7 @@ import ru.nsd.exceptions.InvalidXmlFileException;
 
 public class Validator {
 
-    public static void validate(InputStream inputStream) throws InvalidXmlFileException {
+    public static void validate(InputStream inputStream) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();

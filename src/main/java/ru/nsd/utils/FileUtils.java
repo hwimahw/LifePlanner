@@ -1,5 +1,7 @@
 package ru.nsd.utils;
 
+import ru.nsd.exceptions.WriteToFileException;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,7 +40,7 @@ public class FileUtils {
             inStream.close();
             outStream.close();
         }catch (Exception ex){
-
+            throw new WriteToFileException("Write file exception");
         }
     }
 }

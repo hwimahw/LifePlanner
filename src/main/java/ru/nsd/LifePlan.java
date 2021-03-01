@@ -5,6 +5,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ru.nsd.exceptions.InvalidXmlFileException;
 import ru.nsd.exceptions.NoLifePlanException;
+import ru.nsd.exceptions.WriteToFileException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -60,7 +61,7 @@ public class LifePlan {
         }
     }
 
-    private void buildLifePlan(InputStream inputStream) throws InvalidXmlFileException{
+    private void buildLifePlan(InputStream inputStream) {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = factory.newDocumentBuilder();
@@ -161,7 +162,7 @@ public class LifePlan {
             bufferedWriter.write(date + "\n\n");
             printDayPlanToFileIter(noda, bufferedWriter, "");
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new WriteToFileException("Writing to file exception");
         } finally {
             try {
                 bufferedWriter.close();
@@ -186,7 +187,7 @@ public class LifePlan {
                 }
             }
         } catch (Exception ex) {
-            return;
+            throw new WriteToFileException("Writing to file exception");
         }
 
     }

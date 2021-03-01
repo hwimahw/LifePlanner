@@ -30,7 +30,7 @@ public class UploadFileServlet extends HttpServlet implements ServletContextAwar
     ServletContext servletContext;
 
     protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response)
-            throws  javax.servlet.ServletException, IOException, InvalidXmlFileException {
+            throws  javax.servlet.ServletException, IOException {
         MultipartFile file = (MultipartFile) request.getAttribute("file");
         InputStream fileContent;
         if (file == null) {
@@ -40,15 +40,11 @@ public class UploadFileServlet extends HttpServlet implements ServletContextAwar
             Validator.validate(fileContent);
             fileContent.reset();
         }
-        try {
-            lifePlan = new LifePlan(fileContent);
-            getServletContext().setAttribute("lifePlan", lifePlan);
-            request.setAttribute("leaves", lifePlan.getLeaves());
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("Ctrl/lifePlan");
-            requestDispatcher.forward(request, response);
-        }catch(InvalidXmlFileException ex){
-            throw new IOException(ex.getMessage());
-        }
+        lifePlan = new LifePlan(fileContent);
+        getServletContext().setAttribute("lifePlan", lifePlan);
+        request.setAttribute("leaves", lifePlan.getLeaves());
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Ctrl/lifePlan");
+        requestDispatcher.forward(request, response);
     }
 
     @Override
