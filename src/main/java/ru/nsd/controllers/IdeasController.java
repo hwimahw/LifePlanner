@@ -30,7 +30,6 @@ public class IdeasController {
 
     @GetMapping("/new")
     public String newIdeaForm(){
-
         return "ideas/ideasForm";
     }
 
@@ -45,9 +44,16 @@ Redirect необходим для построения нового get зап�
 Это нужно потому, что jsp не может обрабатывать запрос
 с методом DELETE.
 */
+    @PatchMapping("/{id}")
+    public String editIdea(@PathVariable("id") int id,
+                           @RequestParam(value = "new_idea", required = false) String idea){
+        ideaService.editIdea(id, idea);
+        return "redirect:/Ideas/new";
+    }
+
     @DeleteMapping("/{id}")
-    public String editIdea(@PathVariable("id") String id, @RequestParam("new_idea") String idea){
-        ideaService.editIdea(Integer.parseInt(id), idea);
-        return "redirect:/Ideas/new"; // redirect yt
+    public String deleteIdea(@PathVariable("id") int id){
+        ideaService.deleteIdea(id);
+        return "redirect:/Ideas/new";
     }
 }

@@ -36,5 +36,9 @@ public class IdeaService {
         ideaDao.editIdea(id, idea);
     }
 
+    public void deleteIdea(int id) {
+        ideaDao.deleteIdea(id);
+    }
+
 
 }

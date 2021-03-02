@@ -27,7 +27,7 @@ public class IdeaDao {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from TABLE_IDEAS");
             List<Idea> ideas = new ArrayList<>();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 Idea idea = new Idea(resultSet.getDate(2), resultSet.getString(3));
                 ideas.add(idea);
             }
@@ -35,21 +35,21 @@ public class IdeaDao {
             FileUtils.sendFile(request, response, "AllIdeas.txt");
 
         } catch (SQLException ex) {
-           WorkWithDataBaseException e = new WorkWithDataBaseException("get all ideas exception");
-           e.initCause(ex);
-           throw e;
+            WorkWithDataBaseException e = new WorkWithDataBaseException("get all ideas exception");
+            e.initCause(ex);
+            throw e;
         }
     }
 
     public void getIdeasByDate(HttpServletRequest request, HttpServletResponse response,
-                        String date) {
+                               String date) {
         try {
             Connection connection = ConnectionFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement("select * from TABLE_IDEAS where date = ?");
             statement.setString(1, date);
             ResultSet resultSet = statement.executeQuery();
             List<Idea> ideas = new ArrayList<>();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 Idea idea = new Idea(resultSet.getDate(2), resultSet.getString(3));
                 ideas.add(idea);
             }
@@ -87,7 +87,7 @@ public class IdeaDao {
 
     }
 
-    public void setIdea(Idea idea){
+    public void setIdea(Idea idea) {
         try {
             Connection connection = ConnectionFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement("insert into TABLE_IDEAS values (?, ?, ?)");
@@ -95,7 +95,7 @@ public class IdeaDao {
             statement.setDate(2, idea.getDate());
             statement.setString(3, idea.getIdea());
             statement.executeUpdate();
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             WorkWithDataBaseException e = new WorkWithDataBaseException("set idea exception");
             e.initCause(ex);
             throw e;
@@ -104,18 +104,30 @@ public class IdeaDao {
 
     }
 
-    public void editIdea(int id, String idea){
+    public void editIdea(int id, String idea) {
         try {
             Connection connection = ConnectionFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement("update TABLE_IDEAS set idea = ? where id = ?");
-            statement.setString (1, idea);
+            statement.setString(1, idea);
             statement.setInt(2, id);
             statement.executeUpdate();
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             WorkWithDataBaseException e = new WorkWithDataBaseException("edit idea exception");
             e.initCause(ex);
             throw e;
         }
+    }
 
+    public void deleteIdea(int id) {
+        try {
+            Connection connection = ConnectionFactory.getConnection();
+            PreparedStatement statement = connection.prepareStatement("delete from TABLE_IDEAS where id = ?");
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            WorkWithDataBaseException e = new WorkWithDataBaseException("delete idea exception");
+            e.initCause(ex);
+            throw e;
+        }
     }
 }
