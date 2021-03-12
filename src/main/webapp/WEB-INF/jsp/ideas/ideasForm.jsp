@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <head>
     <title>Идеи/Мысли</title>
@@ -26,6 +27,9 @@
             border-style:solid;
             padding: 10px;
         }
+        .color {
+            color:#ff0000;
+        }
         h1{
             font-size: 16pt;
         }
@@ -35,13 +39,15 @@
 <body>
 <div class="block1">
     <h1>Новая идея/мысль</h1>
-    <form method="post" action="/Ideas">
+    <form:form id="new_idea_form" method="post" action="/Ideas" modelAttribute="idea">
     <p><b><c:out value="Дата"/></b><br>
         <input type="text" id="date" name="date" size= "40">
-    <p><b><c:out value="Мысль/Идея"/></b><br>
+<%--        <form:input path="date" id="date"/>--%>
+    <p><b><c:out value="Мысль/Идея"/></b><br></p>
         <input type="text" name="idea" size= "40">
-    <p><button type="submit" id="idea_thought_btn">OK</button></p>
-</form>
+        <td><form:errors path="idea" cssClass="color"/></td>
+        <p><button type="submit" id="idea_thought_btn">OK</button></p>
+</form:form>
 </div>
 <p>
 <div class="block2">
@@ -66,6 +72,7 @@
         <p><b><c:out value="Номер (id)"/></b></p>
         <input type="hidden" name="_method" value="patch">
         <input type="text" id="id" name="id" size= "40">
+        <p><b><c:out value="Мысль/Идея"/></b><br></p>
         <input type="text" id="new_idea" name="new_idea" size= "40">
         <p><button type="submit" id="edit_btn">OK</button></p>
     </form>
@@ -86,6 +93,45 @@
         var form = document.getElementById(form_id);
         form.action = action_src;
     }
+
+    function validate_date(value, flag)
+    {
+        var arrD = value.split("-");
+        arrD[1] -= 1;
+        var d = new Date(arrD[0], arrD[1], arrD[2]);
+        if ((d.getFullYear() == arrD[0]) && (d.getMonth() == arrD[1]) && (d.getDate() == arrD[2])) {
+            if(flag === 1){
+                urlBuild('date_ideas','date_ideas_form'); // дополнительный вызов необходим,
+                                                          // так как событие вызова данной функции заменется
+            }
+            return true;
+        } else {
+            alert("Введена некорректная дата!");
+            return false;
+        }
+    }
+
+    function validate(formId, dateInputId, flag) {
+
+        var form = document.getElementById(formId);
+        var name = document.getElementById(dateInputId);
+
+        // Навешиваем на форму обработчик отправки
+        form.onsubmit = function (evt) {
+            // Проверяем введённое значение на соответствие
+            if (!validate_date(name.value, flag)) {
+                // Если значение не подходит, отменяем автоматическую отправку формы
+                evt.preventDefault();
+            }
+        };
+    }
+
+    validate('new_idea_form', 'date', 0);
+    validate('date_ideas_form', 'date_ideas', 1);
+
+
+
+
 </script>
 </form>
 </div>

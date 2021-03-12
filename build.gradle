@@ -20,8 +20,10 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
     compile group: 'org.springframework', name: 'spring-webmvc', version: '5.2.6.RELEASE'
     compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+    implementation group: 'org.hibernate', name: 'hibernate-validator', version: '6.2.0.Final'
+    implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+    implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
 }
-
 test {
     useJUnitPlatform()
 }
