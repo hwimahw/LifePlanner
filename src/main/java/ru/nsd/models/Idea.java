@@ -17,6 +17,10 @@ public class Idea {
         ++id;
     }
 
+    public Idea(){
+      // Конструктор по умолчанию и setter'ы необходимы для BeanPropertyRowMapper
+    }
+
     public String getIdea() {
         return idea;
     }
@@ -25,7 +29,19 @@ public class Idea {
         return date;
     }
 
-    public static int getId() {
+    public int getId() {
         return id;
+    }
+
+    public static void setId(int id) {
+        Idea.id = id;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setIdea(String idea) {
+        this.idea = idea;
     }
 }
