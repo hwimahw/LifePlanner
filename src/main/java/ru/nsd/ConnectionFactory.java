@@ -2,6 +2,7 @@ package ru.nsd;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class ConnectionFactory {
     public static final String JDBC_DRIVER = "org.h2.Driver";
@@ -9,24 +10,18 @@ public class ConnectionFactory {
     public static final String USER = "sa";
     public static final String PASS = "";
 
-    private static ConnectionFactory instance;
+    private static Connection connection;
 
-    private ConnectionFactory() {
+    static{
         try {
             Class.forName(JDBC_DRIVER);
-        } catch (Exception ex) {
-            throw new RuntimeException("Error using jdbc driver", ex);
+            connection = DriverManager.getConnection(URL, USER, PASS);
+        } catch (ClassNotFoundException | SQLException ex) {
+            throw new RuntimeException("Error connecting to the database", ex);
         }
     }
 
     public static Connection getConnection() {
-        if (instance == null) {
-            instance = new ConnectionFactory();
-        }
-        try {
-            return DriverManager.getConnection(URL, USER, PASS);
-        } catch (Exception ex) {
-            throw new RuntimeException("Error connecting to the database", ex);
-        }
+        return connection;
     }
 }

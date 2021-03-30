@@ -75,6 +75,12 @@
     <p><button type="submit" id="btn_ideas_new">Идея/мысль</button></p>
 </form>
 </div>
+<div class="block1">
+    <h1>Духовное развитие</h1>
+    <form action="/SpiritDev/new" method="get" enctype="text/plain">
+        <p><button type="submit" id="spirit_new">OK</button></p>
+    </form>
+</div>
 
 
 

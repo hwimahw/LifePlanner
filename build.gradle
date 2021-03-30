@@ -24,6 +24,8 @@ dependencies {
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
     implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.4'
+    implementation group: 'com.fasterxml.uuid', name: 'java-uuid-generator', version: '3.2.0'
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.29.Final'
 }
 test {
     useJUnitPlatform()
