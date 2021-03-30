@@ -11,10 +11,6 @@ import ru.nsd.models.Spirit;
 @Component
 public class SpiritDao {
 
-    SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-
-
-
     public void setItem(Spirit spirit) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
