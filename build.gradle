@@ -26,6 +26,7 @@ dependencies {
     implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.4'
     implementation group: 'com.fasterxml.uuid', name: 'java-uuid-generator', version: '3.2.0'
     implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.29.Final'
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.18'
 }
 test {
     useJUnitPlatform()

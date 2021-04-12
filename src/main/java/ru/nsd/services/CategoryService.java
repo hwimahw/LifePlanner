@@ -2,17 +2,19 @@ package ru.nsd.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.nsd.dao.CategoryDao;
 import ru.nsd.dao.SpiritDao;
+import ru.nsd.models.spiritModels.Category;
 import ru.nsd.models.spiritModels.Spirit;
 
 @Component
-public class SpiritService {
+public class CategoryService {
 
     @Autowired
-    SpiritDao spiritDao;
+    CategoryDao categoryDao;
 
-    public void setItem(Spirit spirit) {
-        spiritDao.setItem(spirit);
+    public void setCategory(Category category) {
+        categoryDao.setCategory(category);
     }
 
 }
