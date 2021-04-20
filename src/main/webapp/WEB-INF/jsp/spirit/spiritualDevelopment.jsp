@@ -26,8 +26,8 @@
                 <input type="text" id="item" name="item" size= "40">
             <p><b><c:out value="Категория"/></b><br>
                 <input type="text" id="category" name="category" size= "40">
-            <p><b><c:out value="id"/></b><br>
-                <input type="text" id="id" name="id" size= "40">
+<%--            <p><b><c:out value="id"/></b><br>--%>
+<%--                <input type="text" id="id" name="id" size= "40">--%>
             <p><button type="submit" id="item_btn">OK</button></p>
         </form:form>
     </div>

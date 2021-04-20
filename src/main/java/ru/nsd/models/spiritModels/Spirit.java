@@ -7,31 +7,29 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-//@Entity
-//@Table(name = "SPIRIT")
-//@NoArgsConstructor
-//@SecondaryTable(name = "SPIRIT",
-//        pkJoinColumns = @PrimaryKeyJoinColumn(
-//                name = "id",
-//                referencedColumnName = "category_id"))
+@Entity
+@Table(name = "SPIRIT")
 public class Spirit {
 
-//    @Id
-  //  @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "ID")
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue
     private long id;
 
-//    @Column(name = "CATEGORY_ID")
-    private long categoryId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "CATEGORY_ID")
+    private Category category;
 
+    @Column(name = "ITEM")
     private String item;
 
 
-    public Spirit(String item, long id){
-        id = Generators.timeBasedGenerator().generate()
-                .getMostSignificantBits();
-        this.id = id;
+    public Spirit(String item, Category category){
+//        id = Generators.timeBasedGenerator().generate()
+//                .getMostSignificantBits();
+//        this.id = id;
         this.item = item;
+        this.category = category;
     }
 
 }
