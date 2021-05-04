@@ -1,25 +1,22 @@
 package ru.nsd.dao;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
-import ru.nsd.HibernateUtil;
+import org.springframework.transaction.annotation.Transactional;
 import ru.nsd.models.spiritModels.Spirit;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 
 @Component
 public class SpiritDao {
 
+    @PersistenceContext
+    EntityManager entityManager;
+
+
+    @Transactional
     public void setItem(Spirit spirit) {
-        EntityManagerFactory entityManagerFactory = Persistence
-                .createEntityManagerFactory("SpiritPersistence");
-        EntityManager em = entityManagerFactory.createEntityManager();
-        em.getTransaction().begin();
-        em.persist(spirit);
-        em.getTransaction().commit();
-        em.close();
+        entityManager.persist(spirit);
+        entityManager.close();
     }
 }
