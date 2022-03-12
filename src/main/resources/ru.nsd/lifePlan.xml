@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MainFields name="Self-development">
+    <MainField name="Study">
+        <Field name="Computer Science">
+            <Subject name="Programming"></Subject>
+            <Subject name="Algorithms"></Subject>
+        </Field>
+    </MainField>
+    <MainField name="Sport">
+        <Field name="Football">
+            <Subject name="Physiques"></Subject>
+            <Subject name="Techniques"></Subject>
+        </Field>
+    </MainField>
+    <MainField name="Other"></MainField>
+</MainFields>
