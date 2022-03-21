@@ -1,17 +1,21 @@
 package ru.nsd;
 
+import ru.nsd.exceptions.DateBuildException;
+import ru.nsd.exceptions.DayPlanBuildException;
+
 import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Manager {
 
-    Menu menu = new Menu();
-    LifePlan lifePlan = new LifePlan();
+    private Menu menu = new Menu();
+    private LifePlan lifePlan = new LifePlan();
+    private boolean exit = false;
 
     public void select() throws Exception {
-        int exit = 0;
         do {
             menu.buildPrintMenu();
             Scanner scanner = new Scanner(new InputStreamReader(System.in));
@@ -22,28 +26,48 @@ public class Manager {
                     break;
                 }
                 case (2): {
-                    Map<String, String> subjectPlan = new HashMap<>();
+                    Map<String, String> subjectAndPlanMap = new HashMap<>();
                     scanner.nextLine();
-                    while (exit == 0) {
-                        String subjectPlanString = scanner.nextLine();
-                        if (subjectPlanString.contains("/")) {
-                            subjectPlanString = subjectPlanString.replace("/", "");
-                            exit = 1;
-                        }
-                        String[] split = subjectPlanString.split(":");
-                        subjectPlan.put(split[0], split[1]);
+                    String date = scanner.nextLine();
+                    LocalDate localDate = buildDate(date);
+                    while (!exit) {
+                        String subjectAndPlan = scanner.nextLine();
+                        buildAndAddSubjectAndPlan(subjectAndPlan, subjectAndPlanMap);
                     }
-                    DayPlan dayPlan = new DayPlan(subjectPlan);
-                    lifePlan.fillPlanOfLeaves(dayPlan);
-                    lifePlan.fillVisitNodesForPrinting();
-               //     lifePlan.printDayPlanToFile(); DATE????
-
+                    DayPlan dayPlan = new DayPlan(localDate, subjectAndPlanMap);
+                    lifePlan.dayPlanToFile(dayPlan);
                 }
                 case (3): {
-                    exit = 1;
+                    exit = true;
                     break;
                 }
             }
-        } while (exit == 0);
+        } while (!exit);
+    }
+
+    private void buildAndAddSubjectAndPlan(String subjectAndPlan, Map<String, String> subjectPlan) {
+        try {
+            if (subjectAndPlan.contains("/")) {
+                subjectAndPlan = subjectAndPlan.replace("/", "");
+                exit = true;
+            }
+            String[] split = subjectAndPlan.split(":");
+            subjectPlan.put(split[0], split[1]);
+        } catch (Exception exception) {
+            throw new DayPlanBuildException();
+        }
+    }
+
+    private LocalDate buildDate(String date) {
+        String[] dateElements = date.split("\\.");
+        try {
+            String year = dateElements[0];
+            String month = dateElements[1];
+            String dayOfMonth = dateElements[2];
+            return LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(dayOfMonth));
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new DateBuildException();
+        }
     }
 }

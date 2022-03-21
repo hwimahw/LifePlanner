@@ -1,17 +1,15 @@
 package ru.nsd;
 
+import org.springframework.util.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ru.nsd.exceptions.BuildLifePlanException;
+import ru.nsd.exceptions.DayPlanPrintToFileException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +17,6 @@ import java.util.Map;
 public class LifePlan {
 
     private Noda root;
-
     private List<Noda> leaves;
 
     public LifePlan() {
@@ -44,10 +41,11 @@ public class LifePlan {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = factory.newDocumentBuilder();
-            Document doc = docBuilder.parse(getClass().getResourceAsStream("/ru/nsd/lifePlan.xml"));
+            Document doc = docBuilder.parse(new FileInputStream("./src/main/resources/lifePlan.xml"));
             this.setRoot(new Noda(doc.getDocumentElement().getAttribute("name"), null));
             buildLifePlanIter(doc.getDocumentElement(), this.root);
-        } catch (Exception e) {
+        } catch (Exception exception) {
+            exception.printStackTrace();
             throw new BuildLifePlanException();
         }
     }
@@ -64,17 +62,17 @@ public class LifePlan {
         }
     }
 
-    private void buildLifePlanIter(Node nodeXmlDocument, Noda nodaCustom) {
-        NodeList children = nodeXmlDocument.getChildNodes();
+    private void buildLifePlanIter(Node nodeFromXmlDocument, Noda noda) {
+        NodeList children = nodeFromXmlDocument.getChildNodes();
         if (children.getLength() == 0) {
-            leaves.add(nodaCustom);
+            leaves.add(noda);
         }
         for (int i = 0; i < children.getLength(); i++) {
             Node nodeChildXmlDocument = children.item(i);
             if (nodeChildXmlDocument.getNodeType() != Node.TEXT_NODE) {
-                Noda nodaCustomChild = new Noda(nodeChildXmlDocument.getAttributes().getNamedItem("name").getNodeValue(), noda);
-                nodaCustom.getChildren().add(nodaCustomChild);
-                buildLifePlanIter(nodeChildXmlDocument, nodaCustomChild);
+                Noda nodaChild = new Noda(nodeChildXmlDocument.getAttributes().getNamedItem("name").getNodeValue(), noda);
+                noda.getChildren().add(nodaChild);
+                buildLifePlanIter(nodeChildXmlDocument, nodaChild);
             }
         }
     }
@@ -82,9 +80,9 @@ public class LifePlan {
     public void fillPlanOfLeaves(DayPlan dayPlan) {
         Map<String, String> plans = dayPlan.getDayPlan();
         for (Map.Entry<String, String> entry : plans.entrySet()) {
-            for (Noda noda : this.leaves) {
-                if (entry.getKey().equals(noda.getName().toUpperCase())) {
-                    if (!"null".equals(entry.getValue())) {
+            for (Noda noda : leaves) {
+                if (entry.getKey().equals(noda.getName())) {
+                    if (StringUtils.hasText(entry.getValue())) {
                         noda.setPlan(entry.getValue());
                     }
                 }
@@ -93,10 +91,10 @@ public class LifePlan {
     }
 
     public void print() {
-        printLifePlanIter(this.root, "");
+        printLifePlanIter(root, "");
     }
 
-    public void printLifePlanIter(Noda noda, String gaps) {
+    private void printLifePlanIter(Noda noda, String gaps) {
         System.out.println(gaps + noda.getName());
         gaps = gaps + "   ";
         List<Noda> children = noda.getChildren();
@@ -115,7 +113,7 @@ public class LifePlan {
     }
 
     public void fillNonVisitNodes() {
-        fillNonVisitNodesIter(this.root);
+        fillNonVisitNodesIter(root);
     }
 
     private void fillNonVisitNodesIter(Noda root) {
@@ -135,26 +133,15 @@ public class LifePlan {
         fillVisitNodesForPrintingIter(noda.getParent());
     }
 
-    public void printDayPlanToFile(String date) {
+    public void printDayPlanToFile(DayPlan dayPlan) {
         File file = new File("out.txt");
-        FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
-        try {
-            fileWriter = new FileWriter(file, true);
-            bufferedWriter = new BufferedWriter(fileWriter);
-            Noda noda = this.root;
+        try (FileWriter fileWriter = new FileWriter(file, true);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
             bufferedWriter.write("-----------------------------------------------------------\n");
-            bufferedWriter.write(date + "\n\n");
-            printDayPlanToFileIter(noda, bufferedWriter, "");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                bufferedWriter.close();
-                fileWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            bufferedWriter.write(dayPlan.getDate() + "\n\n");
+            printDayPlanToFileIter(root, bufferedWriter, "");
+        } catch (IOException exception) {
+            throw new DayPlanPrintToFileException();
         }
 
     }
@@ -167,23 +154,18 @@ public class LifePlan {
                 if (children.size() == 0) {
                     bufferedWriter.write(gaps + "  " + noda.getPlan() + "\n");
                 }
-                for (int i = 0; i < children.size(); i++) {
-                    printDayPlanToFileIter(children.get(i), bufferedWriter, gaps + "  ");
+                for (Noda child : children) {
+                    printDayPlanToFileIter(child, bufferedWriter, gaps + "  ");
                 }
             }
-        } catch (Exception ex) {
-            return;
+        } catch (IOException exception) {
+            throw new DayPlanPrintToFileException();
         }
-
     }
 
-
-    public static void main(String[] args) {
-        ru.nsd.LifePlan lifePlan = new ru.nsd.LifePlan();
-        lifePlan.print();
-    }
-
-    public List<Noda> getLeaves() {
-        return leaves;
+    public void dayPlanToFile(DayPlan dayPlan) {
+        fillPlanOfLeaves(dayPlan);
+        fillVisitNodesForPrinting();
+        printDayPlanToFile(dayPlan);
     }
 }
