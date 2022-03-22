@@ -2,6 +2,7 @@ package ru.nsd;
 
 import ru.nsd.exceptions.DateBuildException;
 import ru.nsd.exceptions.DayPlanBuildException;
+import ru.nsd.utils.Utils;
 
 import java.io.InputStreamReader;
 import java.time.LocalDate;
@@ -29,7 +30,7 @@ public class Manager {
                     Map<String, String> subjectAndPlanMap = new HashMap<>();
                     scanner.nextLine();
                     String date = scanner.nextLine();
-                    LocalDate localDate = buildDate(date);
+                    LocalDate localDate = Utils.buildDate(date);
                     while (!exit) {
                         String subjectAndPlan = scanner.nextLine();
                         buildAndAddSubjectAndPlan(subjectAndPlan, subjectAndPlanMap);
@@ -55,19 +56,6 @@ public class Manager {
             subjectPlan.put(split[0], split[1]);
         } catch (Exception exception) {
             throw new DayPlanBuildException();
-        }
-    }
-
-    private LocalDate buildDate(String date) {
-        String[] dateElements = date.split("\\.");
-        try {
-            String year = dateElements[0];
-            String month = dateElements[1];
-            String dayOfMonth = dateElements[2];
-            return LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(dayOfMonth));
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            throw new DateBuildException();
         }
     }
 }

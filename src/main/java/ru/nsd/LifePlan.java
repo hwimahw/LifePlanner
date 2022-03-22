@@ -168,4 +168,8 @@ public class LifePlan {
         fillVisitNodesForPrinting();
         printDayPlanToFile(dayPlan);
     }
+
+    public List<Noda> getLeaves() {
+        return leaves;
+    }
 }
