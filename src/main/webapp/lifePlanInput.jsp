@@ -18,7 +18,7 @@
 </form>
 
 <c:if test="${leaves.size() > 0}">
-    <form action="/setPlanServlet" method="get">
+    <form action="/setDayPlanServlet" method="get">
         <p><b><c:out value="Date"/></b><br>
             <input type="text" name="date" size="40">
         <c:forEach var="leaf" items="${leaves}" varStatus="loop">

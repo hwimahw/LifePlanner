@@ -18,7 +18,7 @@
 
     <!--    <servlet>-->
     <!--        <servlet-name>ControllerServlet</servlet-name>-->
-    <!--        <servlet-class>ru.nsd.servlets.ControllerServlet</servlet-class>-->
+    <!--        <servlet-class>ru.nsd.servlets.GetLifePlanServlet</servlet-class>-->
     <!--    </servlet>-->
     <!--    <servlet-mapping>-->
     <!--        <servlet-name>ControllerServlet</servlet-name>-->
@@ -27,12 +27,12 @@
     <!--    </servlet-mapping>-->
 
         <servlet>
-            <servlet-name>SetPlanServlet</servlet-name>
-            <servlet-class>ru.nsd.servlets.SetPlanServlet</servlet-class>
+            <servlet-name>SetDayPlanServlet</servlet-name>
+            <servlet-class>ru.nsd.servlets.SetDayPlanServlet</servlet-class>
         </servlet>
         <servlet-mapping>
-            <servlet-name>SetPlanServlet</servlet-name>
-            <url-pattern>/setPlanServlet</url-pattern>
+            <servlet-name>SetDayPlanServlet</servlet-name>
+            <url-pattern>/setDayPlanServlet</url-pattern>
         </servlet-mapping>
 
 

@@ -18,7 +18,7 @@ import java.util.Map;
 
 import static org.springframework.util.StringUtils.hasText;
 
-public class SetPlanServlet extends HttpServlet {
+public class SetDayPlanServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
