@@ -1,12 +1,7 @@
 package ru.nsd.servlets;
 
-import ru.nsd.DayPlan;
-import ru.nsd.LifePlan;
 import ru.nsd.Model;
-import ru.nsd.services.ModelService;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +11,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
-import java.util.Map;
 
 public class GetLifePlanServlet extends HttpServlet {
 
