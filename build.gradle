@@ -16,5 +16,5 @@ dependencies {
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
     compile group: 'jstl', name: 'jstl', version: '1.2'
     compile group: 'com.h2database', name: 'h2', version: '1.4.200'
-    implementation group: 'com.zaxxer', name: 'HikariCP', version: '5.0.1'
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: '4.0.3'
 }

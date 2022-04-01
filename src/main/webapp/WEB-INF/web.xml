@@ -35,5 +35,14 @@
             <url-pattern>/setDayPlanServlet</url-pattern>
         </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SaveDayPlanServlet</servlet-name>
+        <servlet-class>ru.nsd.servlets.SaveDayPlanServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SaveDayPlanServlet</servlet-name>
+        <url-pattern>/save</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

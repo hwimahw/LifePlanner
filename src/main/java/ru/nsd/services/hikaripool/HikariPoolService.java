@@ -38,8 +38,14 @@ public class HikariPoolService {
     }
 
     private static void createDataSource() {
-        HikariConfig hikariConfig = new HikariConfig("db.properties");
-        HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
-        dataSource = hikariDataSource;
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setDriverClassName("org.h2.Driver");
+        hikariConfig.setJdbcUrl( "jdbc:h2:~/test1;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE" );
+        hikariConfig.setUsername( "sa" );
+        hikariConfig.setPassword( "" );
+        hikariConfig.addDataSourceProperty( "cachePrepStmts" , "true" );
+        hikariConfig.addDataSourceProperty( "prepStmtCacheSize" , "250" );
+        hikariConfig.addDataSourceProperty( "prepStmtCacheSqlLimit" , "2048" );
+        dataSource = new HikariDataSource(hikariConfig);
     }
 }

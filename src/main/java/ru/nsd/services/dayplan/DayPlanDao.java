@@ -16,6 +16,7 @@ public class DayPlanDao {
             try {
                 Connection conn = HikariPoolService.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setObject(1, "1212");
                 stmt.setObject(2, dayPlan.getDate());
                 stmt.setString(3, entry.getKey());
                 stmt.setString(4, entry.getValue());

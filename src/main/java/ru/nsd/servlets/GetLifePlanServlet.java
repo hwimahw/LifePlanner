@@ -1,6 +1,5 @@
 package ru.nsd.servlets;
 
-import ru.nsd.Model;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -29,7 +28,7 @@ public class GetLifePlanServlet extends HttpServlet {
 //                DayPlan dPl = new DayPlan(dayPlan);
 //                lifePlan.fillPlanOfLeaves(dPl);
 //                lifePlan.fillVisitNodesForPrinting();
-                lifePlan.printDayPlanToFile(dayPlan.get("DATE"));
+//                lifePlan.printDayPlanToFile(dayPlan.get("DATE"));
 //            }
 //        }
         String filePath = "out.txt";

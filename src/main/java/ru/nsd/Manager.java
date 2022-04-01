@@ -1,6 +1,5 @@
 package ru.nsd;
 
-import ru.nsd.exceptions.DateBuildException;
 import ru.nsd.exceptions.DayPlanBuildException;
 import ru.nsd.utils.Utils;
 
