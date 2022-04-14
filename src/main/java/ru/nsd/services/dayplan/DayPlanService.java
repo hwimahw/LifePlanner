@@ -2,6 +2,9 @@ package ru.nsd.services.dayplan;
 
 import ru.nsd.DayPlan;
 
+import java.util.List;
+import java.util.Map;
+
 public class DayPlanService {
 
     DayPlanDao dayPlanDao = new DayPlanDao();
@@ -9,8 +12,8 @@ public class DayPlanService {
     public void insert(DayPlan dayPlan) {
         dayPlanDao.insert(dayPlan);
     }
-//
-//    public List<Map<String, String>> select(LifePlan lifePlan){
-//        return dayPlanDao.select(lifePlan);
-//    }
+
+    public List<Map<String, String>> select(){
+        return dayPlanDao.select();
+    }
 }

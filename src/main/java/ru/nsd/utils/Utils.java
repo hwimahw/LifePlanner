@@ -7,7 +7,7 @@ import java.time.LocalDate;
 public class Utils {
 
     public static LocalDate buildDate(String date) {
-        String[] dateElements = date.split("\\.");
+        String[] dateElements = date.split("-");
         try {
             String year = dateElements[0];
             String month = dateElements[1];

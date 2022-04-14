@@ -16,24 +16,14 @@
         <url-pattern>/uploadFileServlet</url-pattern>
     </servlet-mapping>
 
-    <!--    <servlet>-->
-    <!--        <servlet-name>ControllerServlet</servlet-name>-->
-    <!--        <servlet-class>ru.nsd.servlets.GetLifePlanServlet</servlet-class>-->
-    <!--    </servlet>-->
-    <!--    <servlet-mapping>-->
-    <!--        <servlet-name>ControllerServlet</servlet-name>-->
-    <!--        <url-pattern>/save</url-pattern>-->
-    <!--        <url-pattern>/get</url-pattern>-->
-    <!--    </servlet-mapping>-->
-
-        <servlet>
-            <servlet-name>SetDayPlanServlet</servlet-name>
-            <servlet-class>ru.nsd.servlets.SetDayPlanServlet</servlet-class>
-        </servlet>
-        <servlet-mapping>
-            <servlet-name>SetDayPlanServlet</servlet-name>
-            <url-pattern>/setDayPlanServlet</url-pattern>
-        </servlet-mapping>
+    <servlet>
+        <servlet-name>SetDayPlanServlet</servlet-name>
+        <servlet-class>ru.nsd.servlets.SetDayPlanServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SetDayPlanServlet</servlet-name>
+        <url-pattern>/setDayPlanServlet</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>SaveDayPlanServlet</servlet-name>
@@ -44,5 +34,12 @@
         <url-pattern>/save</url-pattern>
     </servlet-mapping>
 
-
+    <servlet>
+        <servlet-name>GetLifePlanServlet</servlet-name>
+        <servlet-class>ru.nsd.servlets.GetLifePlanServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetLifePlanServlet</servlet-name>
+        <url-pattern>/get</url-pattern>
+    </servlet-mapping>
 </web-app>
