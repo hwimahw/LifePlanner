@@ -6,6 +6,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ru.nsd.exceptions.BuildLifePlanException;
 import ru.nsd.exceptions.DayPlanPrintToFileException;
+import ru.nsd.models.DayPlan;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,7 +22,7 @@ public class LifePlan {
 
     public LifePlan() {
         leaves = new ArrayList<>();
-        buildLifePlan();
+//        buildLifePlan();
     }
 
     public LifePlan(InputStream inputStream) {
@@ -171,5 +172,9 @@ public class LifePlan {
 
     public List<Noda> getLeaves() {
         return leaves;
+    }
+
+    public void setLeaves(List<Noda> leaves) {
+        this.leaves = leaves;
     }
 }

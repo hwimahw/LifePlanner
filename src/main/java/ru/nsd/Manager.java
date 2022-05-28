@@ -1,6 +1,7 @@
 package ru.nsd;
 
 import ru.nsd.exceptions.DayPlanBuildException;
+import ru.nsd.models.DayPlan;
 import ru.nsd.utils.Utils;
 
 import java.io.InputStreamReader;

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <welcome-file-list>
-        <welcome-file>lifePlanInput.jsp</welcome-file>
+        <welcome-file>logInPage.jsp</welcome-file>
     </welcome-file-list>
 
     <servlet>
@@ -42,4 +42,42 @@
         <servlet-name>GetLifePlanServlet</servlet-name>
         <url-pattern>/get</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LifePlanInput</servlet-name>
+        <jsp-file>/lifePlanInput.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LifePlanInput</servlet-name>
+        <url-pattern>/lifePlanInput</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogInPage</servlet-name>
+        <servlet-class>ru.nsd.servlets.LogInPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogInPage</servlet-name>
+        <url-pattern>/logInPage</url-pattern>
+        <url-pattern>/logIn</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RegisterPage</servlet-name>
+        <servlet-class>ru.nsd.servlets.RegisterPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegisterPage</servlet-name>
+        <url-pattern>/registerPage</url-pattern>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>CommonFilter</filter-name>
+        <filter-class>ru.nsd.filter.CommonFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CommonFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>

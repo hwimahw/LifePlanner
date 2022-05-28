@@ -1,7 +1,6 @@
 package ru.nsd.services.dayplan;
 
-import ru.nsd.DayPlan;
-import ru.nsd.LifePlan;
+import ru.nsd.models.DayPlan;
 import ru.nsd.exceptions.ConnectionWithDataBaseException;
 import ru.nsd.services.hikaripool.HikariPoolService;
 

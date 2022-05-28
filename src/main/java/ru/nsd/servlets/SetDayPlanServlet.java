@@ -1,6 +1,6 @@
 package ru.nsd.servlets;
 
-import ru.nsd.DayPlan;
+import ru.nsd.models.DayPlan;
 import ru.nsd.LifePlan;
 import ru.nsd.Noda;
 import ru.nsd.utils.Utils;

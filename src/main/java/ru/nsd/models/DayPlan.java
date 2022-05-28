@@ -1,4 +1,4 @@
-package ru.nsd;
+package ru.nsd.models;
 
 import java.time.LocalDate;
 import java.util.Map;

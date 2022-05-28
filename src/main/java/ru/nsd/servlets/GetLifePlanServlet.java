@@ -1,12 +1,10 @@
 package ru.nsd.servlets;
 
 
-import ru.nsd.DayPlan;
+import ru.nsd.models.DayPlan;
 import ru.nsd.LifePlan;
 import ru.nsd.services.dayplan.DayPlanService;
-import ru.nsd.utils.Utils;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

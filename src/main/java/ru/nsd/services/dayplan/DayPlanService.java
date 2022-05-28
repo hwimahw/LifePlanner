@@ -1,6 +1,6 @@
 package ru.nsd.services.dayplan;
 
-import ru.nsd.DayPlan;
+import ru.nsd.models.DayPlan;
 
 import java.util.List;
 import java.util.Map;
