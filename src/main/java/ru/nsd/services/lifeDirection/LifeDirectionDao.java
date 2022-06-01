@@ -19,11 +19,11 @@ public class LifeDirectionDao {
             Connection connection = HikariPoolService.getConnection();
             for (LifeDirection lifeDirection : lifeDirections) {
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setLong(1, lifeDirection.getUserId());
-                preparedStatement.setLong(2, lifeDirection.getLevel());
+                preparedStatement.setObject(1, lifeDirection.getUserId());
+                preparedStatement.setObject(2, lifeDirection.getLevel());
                 preparedStatement.setString(3, lifeDirection.getName());
-                preparedStatement.setInt(4, lifeDirection.getNumber());
-                preparedStatement.setInt(5, lifeDirection.getParentNumber());
+                preparedStatement.setObject(4, lifeDirection.getNumber());
+                preparedStatement.setObject(5, lifeDirection.getParentNumber());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException exception) {
@@ -44,8 +44,8 @@ public class LifeDirectionDao {
                 userId = resultSet.getLong(2);
                 Integer level = resultSet.getInt(3);
                 String name = resultSet.getString(4);
-                Integer number = resultSet.getInt(4);
-                Integer parentNumber = resultSet.getInt(4);
+                Integer number = resultSet.getInt(5);
+                Integer parentNumber = resultSet.getInt(6);
 
                 LifeDirection lifeDirection = new LifeDirection(id, userId, level, name, number, parentNumber);
                 lifeDirections.add(lifeDirection);

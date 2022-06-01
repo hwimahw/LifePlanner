@@ -1,5 +1,6 @@
 package ru.nsd.servlets;
 
+import ru.nsd.LifePlan;
 import ru.nsd.models.LifeDirection;
 import ru.nsd.models.User;
 import ru.nsd.services.LifePlanCycleService;
@@ -28,7 +29,8 @@ public class LogInPageServlet extends HttpServlet {
             request.getSession().setAttribute("password", user.getPassword());
             request.getSession().setAttribute("userId", user.getId());
             List<LifeDirection> lifeDirections = lifeDirectionService.get(user.getId());
-            request.getSession().setAttribute("leaves", lifePlanCycleService.prepareLifeDirectionsToLifePlanLeaves(lifeDirections));
+            LifePlan lifePlan = lifePlanCycleService.prepareLifeDirectionsToLifePlan(lifeDirections);
+            request.getSession().setAttribute("leaves", lifePlan.getLeaves());
             response.sendRedirect("/lifePlanInput");
         } else {
             request.setAttribute("error", "Такого пользователя не существует");
