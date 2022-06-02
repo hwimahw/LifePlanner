@@ -20,8 +20,8 @@ public class CommonFilter implements javax.servlet.Filter {
         HttpSession session = req.getSession();
         String requestURI = ((HttpServletRequest) request).getRequestURI();
 
-        if("/registerPage".equals(requestURI) || "/register".equals(requestURI)
-            || "/logInPage".equals(requestURI) || "/logIn".equals(requestURI)){
+        if ("/registerPage".equals(requestURI) || "/register".equals(requestURI)
+                || "/logInPage".equals(requestURI) || "/logIn".equals(requestURI)) {
             chain.doFilter(request, response);
             return;
         }

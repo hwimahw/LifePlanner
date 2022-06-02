@@ -11,21 +11,6 @@ public class HikariPoolService {
 
     private static DataSource dataSource;
 
-//    public static void main(String[] args) {
-//        String query = "SELECT COUNT(*) FROM employee";
-//        //Using try-with-resources for auto closing connection, pstmt, and rs.
-//        try (Connection connection = getConnection();
-//             PreparedStatement pstmt = connection.prepareStatement(query);
-//             ResultSet rs = pstmt.executeQuery();
-//        ) {
-//            if (rs.next()) {
-//                System.out.println("Total employees are " + rs.getInt(1));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     public static Connection getConnection() throws SQLException {
         return getDataSource().getConnection();
     }

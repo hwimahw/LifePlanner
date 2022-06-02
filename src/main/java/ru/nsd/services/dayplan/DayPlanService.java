@@ -13,7 +13,7 @@ public class DayPlanService {
         dayPlanDao.insert(dayPlan);
     }
 
-    public List<Map<String, String>> select(){
+    public List<Map<String, String>> select() {
         return dayPlanDao.select();
     }
 }

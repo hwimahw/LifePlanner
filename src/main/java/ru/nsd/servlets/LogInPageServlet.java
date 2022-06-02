@@ -14,11 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static java.util.Objects.isNull;
+
 public class LogInPageServlet extends HttpServlet {
 
-    LifePlanCycleService lifePlanCycleService = new LifePlanCycleService();
-    LifeDirectionService lifeDirectionService = new LifeDirectionService();
-    UserService userService = new UserService();
+    private final LifePlanCycleService lifePlanCycleService = new LifePlanCycleService();
+    private final LifeDirectionService lifeDirectionService = new LifeDirectionService();
+    private final UserService userService = new UserService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
@@ -39,6 +41,16 @@ public class LogInPageServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("logInPage.jsp").forward(request, response);
+        String login = (String) request.getSession().getAttribute("login");
+        String password = (String) request.getSession().getAttribute("password");
+        Long userId = (Long) request.getSession().getAttribute("userId");
+        if (isNull(login) || isNull(password) || isNull(userId)) {
+            request.getRequestDispatcher("logInPage.jsp").forward(request, response);
+        } else {
+            List<LifeDirection> lifeDirections = lifeDirectionService.get(userId);
+            LifePlan lifePlan = lifePlanCycleService.prepareLifeDirectionsToLifePlan(lifeDirections);
+            request.getSession().setAttribute("leaves", lifePlan.getLeaves());
+            response.sendRedirect("/lifePlanInput");
+        }
     }
 }

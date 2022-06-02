@@ -1,7 +1,6 @@
 package ru.nsd.services.user;
 
 import ru.nsd.exceptions.UserBuildException;
-import ru.nsd.models.Role;
 import ru.nsd.models.User;
 import ru.nsd.services.hikaripool.HikariPoolService;
 
