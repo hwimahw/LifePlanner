@@ -10,20 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 public class SaveDayPlanServlet extends HttpServlet {
 
     private final DayPlanService dayPlanService = new DayPlanService();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        DayPlan dayPlan = (DayPlan) request.getAttribute("dayPlan");
+        dayPlanService.insert(dayPlan);
+        List<String> leaves = (List<String>) request.getSession().getAttribute("leaves");
+        request.setAttribute("leaves", leaves);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("lifePlanInput.jsp");
+        requestDispatcher.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        DayPlan dayPlan = (DayPlan) request.getAttribute("dayPlan");
-        dayPlanService.insert(dayPlan);
-        LifePlan lifePlan = (LifePlan) getServletContext().getAttribute("lifePlan");
-        request.setAttribute("leaves", lifePlan.getLeaves());
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("lifePlanInput.jsp");
-        requestDispatcher.forward(request, response);
     }
 }

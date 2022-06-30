@@ -18,9 +18,10 @@
 </form>
 
 <c:if test="${leaves.size() > 0}">
-    <form action="/setDayPlanServlet" method="get">
+    <form action="/setDayPlanServlet" method="post">
         <p><b><c:out value="Date"/></b><br>
             <input type="text" name="date" size="40">
+            <input type="text" name="leaves" value="${leaves}" hidden/>
         <c:forEach var="leaf" items="${leaves}" varStatus="loop">
             <p><b><c:out value="${leaf.name}"/></b><br>
                 <input type="text" name="${leaf.name}" size="40">

@@ -33,6 +33,7 @@ public class LogInPageServlet extends HttpServlet {
             List<LifeDirection> lifeDirections = lifeDirectionService.get(user.getId());
             LifePlan lifePlan = lifePlanCycleService.prepareLifeDirectionsToLifePlan(lifeDirections);
             request.getSession().setAttribute("leaves", lifePlan.getLeaves());
+            request.setAttribute("lifePlan", lifePlan);
             response.sendRedirect("/lifePlanInput");
         } else {
             request.setAttribute("error", "Такого пользователя не существует");

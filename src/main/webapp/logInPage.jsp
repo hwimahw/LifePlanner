@@ -3,12 +3,16 @@
 
 <html>
 <head>
-
+    <style>
+        .font {
+            font-size: 30px;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
-
+<p class="font">Log in</p>
 <form action="/logIn" method="post">
-
     <p><b><c:out value="Логин"/></b><br>
         <input type="text" name="login" size="40">
     <p><b><c:out value="Пароль"/></b><br>

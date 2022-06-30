@@ -14,18 +14,15 @@ public class DayPlanDao {
 
     public void insert(DayPlan dayPlan) {
         for (Map.Entry<String, String> entry : dayPlan.getDayPlan().entrySet()) {
-            String sql = "INSERT INTO LIFEPLAN VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO LIFEPLAN(USER_ID, DATE, SUBJECT, PLAN) VALUES (?, ?, ?, ?)";
             try {
                 Connection conn = HikariPoolService.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(sql);
-                for (int i = 6; i < 10; i++) {
-                    stmt.setObject(1, i);
-                    stmt.setObject(2, "2323");
-                    stmt.setObject(3, dayPlan.getDate());
-                    stmt.setString(4, entry.getKey());
-                    stmt.setString(5, entry.getValue());
-                    stmt.executeUpdate();
-                }
+                stmt.setObject(1, dayPlan.getUserId());
+                stmt.setObject(2, dayPlan.getDate());
+                stmt.setString(3, entry.getKey());
+                stmt.setString(4, entry.getValue());
+                stmt.executeUpdate();
             } catch (SQLException exception) {
                 throw new ConnectionWithDataBaseException();
             }
