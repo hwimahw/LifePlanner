@@ -11,6 +11,12 @@
     </style>
 </head>
 <body>
+<c:if test="${not empty error}">
+    <c:out value="${error}"></c:out>;
+</c:if>
+<c:if test="${not empty success}">
+    <c:out value="${success}"></c:out>;
+</c:if>
 <p class="font">Log in</p>
 <form action="/logIn" method="post">
     <p><b><c:out value="Логин"/></b><br>

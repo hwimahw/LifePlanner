@@ -53,23 +53,39 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>LogInPage</servlet-name>
+        <servlet-name>LogIn</servlet-name>
         <servlet-class>ru.nsd.servlets.LogInPageServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>LogInPage</servlet-name>
-        <url-pattern>/logInPage</url-pattern>
+        <servlet-name>LogIn</servlet-name>
         <url-pattern>/logIn</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>RegisterPage</servlet-name>
+        <servlet-name>LogInPage</servlet-name>
+        <jsp-file>/logInPage.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogInPage</servlet-name>
+        <url-pattern>/logInPage</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Register</servlet-name>
         <servlet-class>ru.nsd.servlets.RegisterPageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Register</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RegisterPage</servlet-name>
+        <jsp-file>/registerPage.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterPage</servlet-name>
         <url-pattern>/registerPage</url-pattern>
-        <url-pattern>/register</url-pattern>
     </servlet-mapping>
 
     <filter>

@@ -25,8 +25,16 @@ public class LogInPageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+        if (isNull(login) || isNull(password)) {
+            request.setAttribute("error", "Such user doesn't exist");
+            request.getRequestDispatcher("logInPage.jsp").forward(request, response);
+            return;
+        }
         User user = userService.get(new User(login, password));
-        if (login != null && password != null && user != null) {
+        if (isNull(user)) {
+            request.setAttribute("error", "Such user doesn't exist");
+            request.getRequestDispatcher("logInPage.jsp").forward(request, response);
+        } else {
             request.getSession().setAttribute("login", user.getLogin());
             request.getSession().setAttribute("password", user.getPassword());
             request.getSession().setAttribute("userId", user.getId());
@@ -34,10 +42,7 @@ public class LogInPageServlet extends HttpServlet {
             LifePlan lifePlan = lifePlanCycleService.prepareLifeDirectionsToLifePlan(lifeDirections);
             request.getSession().setAttribute("leaves", lifePlan.getLeaves());
             request.setAttribute("lifePlan", lifePlan);
-            response.sendRedirect("/lifePlanInput");
-        } else {
-            request.setAttribute("error", "Такого пользователя не существует");
-            response.sendRedirect("/logInPage");
+            request.getRequestDispatcher("/lifePlanInput").forward(request, response);
         }
     }
 
@@ -52,6 +57,7 @@ public class LogInPageServlet extends HttpServlet {
             LifePlan lifePlan = lifePlanCycleService.prepareLifeDirectionsToLifePlan(lifeDirections);
             request.getSession().setAttribute("leaves", lifePlan.getLeaves());
             response.sendRedirect("/lifePlanInput");
+            request.getRequestDispatcher("/lifePlanInput").forward(request, response);
         }
     }
 }

@@ -23,7 +23,7 @@ public class UploadFileServlet extends HttpServlet {
     private LifePlanCycleService lifePlanCycleService = new LifePlanCycleService();
     private LifeDirectionService lifeDirectionService = new LifeDirectionService();
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPerrost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Part filePart = request.getPart("file");
         InputStream fileContent = filePart.getInputStream();
         LifePlan lifePlan = lifePlanCycleService.createLifePlan(fileContent);

@@ -3,10 +3,18 @@
 
 <html>
 <head>
-Регистрация
+    <style>
+        .font {
+            font-size: 30px;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
-
+<c:if test="${not empty error}">
+    <c:out value="${error}"></c:out>;
+</c:if>
+<p class="font">Register</p>
 <form action="/register" method="post">
 
     <p><b><c:out value="Логин"/></b><br>

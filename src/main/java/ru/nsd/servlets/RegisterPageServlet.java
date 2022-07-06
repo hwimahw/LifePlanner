@@ -27,18 +27,17 @@ public class RegisterPageServlet extends HttpServlet {
         String password = request.getParameter("password");
         if (login != null && password != null) {
             if (userService.get(new User(login, password)) != null) {
-                request.setAttribute("error", "Такой пользователь уже существует");
-                response.sendRedirect("/registerPage");
+                request.setAttribute("error", "User already exists");
+                request.getRequestDispatcher("/registerPage").forward(request, response);
             } else {
                 userService.add(new User(login, password));
-                request.setAttribute("success", "Регистрация выполнена успешно");
-                response.sendRedirect("/logInPage");
+                request.setAttribute("success", "Registration was successful");
+                request.getRequestDispatcher("/logInPage").forward(request, response);
             }
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("registerPage.jsp").forward(request, response);
         String login = (String) request.getSession().getAttribute("login");
         String password = (String) request.getSession().getAttribute("password");
         Long userId = (Long) request.getSession().getAttribute("userId");
@@ -48,7 +47,7 @@ public class RegisterPageServlet extends HttpServlet {
             List<LifeDirection> lifeDirections = lifeDirectionService.get(userId);
             LifePlan lifePlan = lifePlanCycleService.prepareLifeDirectionsToLifePlan(lifeDirections);
             request.getSession().setAttribute("leaves", lifePlan.getLeaves());
-            response.sendRedirect("/lifePlanInput");
+            request.getRequestDispatcher("/lifePlanInput").forward(request, response);
         }
     }
 }
