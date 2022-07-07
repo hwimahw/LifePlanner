@@ -22,11 +22,14 @@ public class CommonFilter implements javax.servlet.Filter {
 
         if ("/registerPage".equals(requestURI) || "/register".equals(requestURI)
                 || "/logInPage".equals(requestURI) || "/logIn".equals(requestURI)) {
+            if (isSessionActive(session)) {
+                res.sendRedirect("/lifePlanInput");
+                return;
+            }
             chain.doFilter(request, response);
             return;
         }
-        if (session != null && session.getAttribute("login") != null
-                && session.getAttribute("password") != null) {
+        if (isSessionActive(session)) {
             chain.doFilter(request, response);
         } else {
             res.sendRedirect("/logInPage");
@@ -36,5 +39,12 @@ public class CommonFilter implements javax.servlet.Filter {
     @Override
     public void destroy() {
 
+    }
+
+    private boolean isSessionActive(HttpSession session) {
+        if (session != null && session.getAttribute("login") != null && session.getAttribute("password") != null) {
+            return true;
+        }
+        return false;
     }
 }

@@ -1,7 +1,6 @@
 package ru.nsd.servlets;
 
 import ru.nsd.LifePlan;
-import ru.nsd.Noda;
 import ru.nsd.models.LifeDirection;
 import ru.nsd.services.LifePlanCycleService;
 import ru.nsd.services.lifeDirection.LifeDirectionService;
@@ -23,14 +22,14 @@ public class UploadFileServlet extends HttpServlet {
     private LifePlanCycleService lifePlanCycleService = new LifePlanCycleService();
     private LifeDirectionService lifeDirectionService = new LifeDirectionService();
 
-    protected void doPerrost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Part filePart = request.getPart("file");
         InputStream fileContent = filePart.getInputStream();
         LifePlan lifePlan = lifePlanCycleService.createLifePlan(fileContent);
         List<LifeDirection> lifeDirections = lifePlanCycleService.prepareLifePlanToLifeDirections(lifePlan, request);
         lifeDirectionService.add(lifeDirections);
         request.setAttribute("leaves", lifePlan.getLeaves());
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("lifePlanInput.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/lifePlanInput");
         requestDispatcher.forward(request, response);
     }
 

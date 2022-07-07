@@ -27,37 +27,26 @@ public class LogInPageServlet extends HttpServlet {
         String password = request.getParameter("password");
         if (isNull(login) || isNull(password)) {
             request.setAttribute("error", "Such user doesn't exist");
-            request.getRequestDispatcher("logInPage.jsp").forward(request, response);
+            request.getRequestDispatcher("/logInPage").forward(request, response);
             return;
         }
         User user = userService.get(new User(login, password));
         if (isNull(user)) {
             request.setAttribute("error", "Such user doesn't exist");
-            request.getRequestDispatcher("logInPage.jsp").forward(request, response);
+            request.getRequestDispatcher("/logInPage").forward(request, response);
         } else {
             request.getSession().setAttribute("login", user.getLogin());
             request.getSession().setAttribute("password", user.getPassword());
             request.getSession().setAttribute("userId", user.getId());
             List<LifeDirection> lifeDirections = lifeDirectionService.get(user.getId());
             LifePlan lifePlan = lifePlanCycleService.prepareLifeDirectionsToLifePlan(lifeDirections);
+            request.getSession().setAttribute("lifePlan", lifePlan);
             request.getSession().setAttribute("leaves", lifePlan.getLeaves());
-            request.setAttribute("lifePlan", lifePlan);
             request.getRequestDispatcher("/lifePlanInput").forward(request, response);
         }
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String login = (String) request.getSession().getAttribute("login");
-        String password = (String) request.getSession().getAttribute("password");
-        Long userId = (Long) request.getSession().getAttribute("userId");
-        if (isNull(login) || isNull(password) || isNull(userId)) {
-            request.getRequestDispatcher("logInPage.jsp").forward(request, response);
-        } else {
-            List<LifeDirection> lifeDirections = lifeDirectionService.get(userId);
-            LifePlan lifePlan = lifePlanCycleService.prepareLifeDirectionsToLifePlan(lifeDirections);
-            request.getSession().setAttribute("leaves", lifePlan.getLeaves());
-            response.sendRedirect("/lifePlanInput");
-            request.getRequestDispatcher("/lifePlanInput").forward(request, response);
-        }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/logInPage").forward(request, response);
     }
 }

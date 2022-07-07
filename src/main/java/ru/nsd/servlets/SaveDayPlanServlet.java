@@ -21,8 +21,7 @@ public class SaveDayPlanServlet extends HttpServlet {
         dayPlanService.insert(dayPlan);
         List<String> leaves = (List<String>) request.getSession().getAttribute("leaves");
         request.setAttribute("leaves", leaves);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("lifePlanInput.jsp");
-        requestDispatcher.forward(request, response);
+        request.getRequestDispatcher("/lifePlanInput").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

@@ -14,7 +14,6 @@ public class Utils {
             String dayOfMonth = dateElements[2];
             return LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(dayOfMonth));
         } catch (Exception exception) {
-            exception.printStackTrace();
             throw new DateBuildException();
         }
     }

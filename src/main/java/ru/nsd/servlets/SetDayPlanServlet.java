@@ -30,8 +30,7 @@ public class SetDayPlanServlet extends HttpServlet {
         List<Noda> leaves = (List) request.getSession().getAttribute("leaves");
         DayPlan dayPlan = buildDayPlan(request, leaves);
         request.setAttribute("dayPlan", dayPlan);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/save");
-        requestDispatcher.forward(request, response);
+        request.getRequestDispatcher("/save").forward(request, response);
     }
 
     private DayPlan buildDayPlan(HttpServletRequest request, List<Noda> leaves) {
