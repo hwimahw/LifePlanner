@@ -88,6 +88,25 @@
         <url-pattern>/registerPage</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Exit</servlet-name>
+        <servlet-class>ru.nsd.servlets.ExitServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Exit</servlet-name>
+        <url-pattern>/Exit</url-pattern>
+    </servlet-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/exceptionHandler</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>javax.servlet.ServletException</exception-type>
+        <location>/exceptionHandler</location>
+    </error-page>
+
     <filter>
         <filter-name>CommonFilter</filter-name>
         <filter-class>ru.nsd.filter.CommonFilter</filter-class>

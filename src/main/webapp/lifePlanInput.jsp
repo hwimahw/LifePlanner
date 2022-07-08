@@ -34,6 +34,10 @@
     </form>
 </c:if>
 
+<form method="get" action="/Exit">
+    <input type="submit" value="Exit" />
+</form>
+
 <%--<script>--%>
 <%--    function btnClick() {--%>
 <%--        new Ajax.Request('http://localhost:8080/get', {--%>

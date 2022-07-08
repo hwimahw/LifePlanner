@@ -29,6 +29,6 @@ public class RegisterPageServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/registerPage").forward(request, response);
+        response.sendRedirect("/registerPage");
     }
 }

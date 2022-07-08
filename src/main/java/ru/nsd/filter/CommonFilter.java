@@ -1,10 +1,14 @@
 package ru.nsd.filter;
 
+import org.springframework.util.StringUtils;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+
+import static org.springframework.util.StringUtils.hasText;
 
 public class CommonFilter implements javax.servlet.Filter {
 
@@ -42,9 +46,7 @@ public class CommonFilter implements javax.servlet.Filter {
     }
 
     private boolean isSessionActive(HttpSession session) {
-        if (session != null && session.getAttribute("login") != null && session.getAttribute("password") != null) {
-            return true;
-        }
-        return false;
+        return session != null && hasText((String) session.getAttribute("login"))
+                && hasText((String) session.getAttribute("password"));
     }
 }

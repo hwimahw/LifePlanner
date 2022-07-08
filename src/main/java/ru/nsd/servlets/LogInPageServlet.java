@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static java.util.Objects.isNull;
+import static org.springframework.util.StringUtils.hasText;
 
 public class LogInPageServlet extends HttpServlet {
 
@@ -25,7 +26,7 @@ public class LogInPageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        if (isNull(login) || isNull(password)) {
+        if (!hasText(login) || !hasText(password)) {
             request.setAttribute("error", "Such user doesn't exist");
             request.getRequestDispatcher("/logInPage").forward(request, response);
             return;
@@ -42,11 +43,11 @@ public class LogInPageServlet extends HttpServlet {
             LifePlan lifePlan = lifePlanCycleService.prepareLifeDirectionsToLifePlan(lifeDirections);
             request.getSession().setAttribute("lifePlan", lifePlan);
             request.getSession().setAttribute("leaves", lifePlan.getLeaves());
-            request.getRequestDispatcher("/lifePlanInput").forward(request, response);
+            response.sendRedirect("/lifePlanInput");
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/logInPage").forward(request, response);
+        response.sendRedirect("/logInPage");
     }
 }
