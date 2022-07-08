@@ -13,6 +13,5 @@ public class ExitServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.getSession().invalidate();
         response.sendRedirect("/logInPage");
-//        request.getRequestDispatcher("/logInPage").forward(request, response);
     }
 }
