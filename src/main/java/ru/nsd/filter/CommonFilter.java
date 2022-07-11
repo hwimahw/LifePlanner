@@ -1,7 +1,5 @@
 package ru.nsd.filter;
 
-import org.springframework.util.StringUtils;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +8,7 @@ import java.io.IOException;
 
 import static org.springframework.util.StringUtils.hasText;
 
-public class CommonFilter implements javax.servlet.Filter {
+public class CommonFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
