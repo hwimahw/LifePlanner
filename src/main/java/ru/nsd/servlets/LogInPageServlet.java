@@ -1,5 +1,7 @@
 package ru.nsd.servlets;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ru.nsd.LifePlan;
 import ru.nsd.models.LifeDirection;
 import ru.nsd.models.User;
@@ -7,6 +9,7 @@ import ru.nsd.services.LifePlanCycleService;
 import ru.nsd.services.lifeDirection.LifeDirectionService;
 import ru.nsd.services.user.UserService;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +22,18 @@ import static org.springframework.util.StringUtils.hasText;
 
 public class LogInPageServlet extends HttpServlet {
 
-    private final LifePlanCycleService lifePlanCycleService = new LifePlanCycleService();
-    private final LifeDirectionService lifeDirectionService = new LifeDirectionService();
-    private final UserService userService = new UserService();
+    @Autowired
+    private LifePlanCycleService lifePlanCycleService;
+    @Autowired
+    private LifeDirectionService lifeDirectionService;
+    @Autowired
+    private UserService userService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
@@ -50,4 +62,6 @@ public class LogInPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.sendRedirect("/logInPage");
     }
+
+
 }

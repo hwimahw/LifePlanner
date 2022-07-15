@@ -1,5 +1,6 @@
 package ru.nsd.services.lifeDirection;
 
+import org.springframework.stereotype.Component;
 import ru.nsd.exceptions.UserBuildException;
 import ru.nsd.models.LifeDirection;
 import ru.nsd.services.hikaripool.HikariPoolService;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class LifeDirectionDao {
 
     public void add(List<LifeDirection> lifeDirections) {

@@ -1,5 +1,6 @@
 package ru.nsd.services.user;
 
+import org.springframework.stereotype.Component;
 import ru.nsd.exceptions.UserBuildException;
 import ru.nsd.models.User;
 import ru.nsd.services.hikaripool.HikariPoolService;
@@ -9,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Component
 public class UserDao {
 
     public User get(User user){

@@ -1,5 +1,6 @@
 package ru.nsd.services.dayplan;
 
+import org.springframework.stereotype.Component;
 import ru.nsd.models.DayPlan;
 import ru.nsd.exceptions.ConnectionWithDataBaseException;
 import ru.nsd.services.hikaripool.HikariPoolService;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class DayPlanDao {
 
     public void insert(DayPlan dayPlan) {

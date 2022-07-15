@@ -1,11 +1,14 @@
 package ru.nsd.servlets;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ru.nsd.LifePlan;
 import ru.nsd.models.LifeDirection;
 import ru.nsd.services.LifePlanCycleService;
 import ru.nsd.services.lifeDirection.LifeDirectionService;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +22,17 @@ import java.util.List;
 @MultipartConfig
 public class UploadFileServlet extends HttpServlet {
 
-    private LifePlanCycleService lifePlanCycleService = new LifePlanCycleService();
-    private LifeDirectionService lifeDirectionService = new LifeDirectionService();
+    @Autowired
+    private LifePlanCycleService lifePlanCycleService;
+
+    @Autowired
+    private LifeDirectionService lifeDirectionService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Part filePart = request.getPart("file");

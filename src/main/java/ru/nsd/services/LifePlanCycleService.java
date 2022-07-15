@@ -1,5 +1,6 @@
 package ru.nsd.services;
 
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
+@Component
 public class LifePlanCycleService {
 
     public LifePlan createLifePlan(InputStream inputStream) {

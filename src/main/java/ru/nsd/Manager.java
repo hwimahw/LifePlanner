@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+
 public class Manager {
 
     private Menu menu = new Menu();

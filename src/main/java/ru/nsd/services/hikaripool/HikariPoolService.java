@@ -25,7 +25,7 @@ public class HikariPoolService {
     private static void createDataSource() {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setDriverClassName("org.h2.Driver");
-        hikariConfig.setJdbcUrl("jdbc:h2:~/test1");
+        hikariConfig.setJdbcUrl("jdbc:h2:tcp://localhost/~/test1");
         hikariConfig.setUsername("sa");
         hikariConfig.setPassword("");
         hikariConfig.addDataSourceProperty("cachePrepStmts", "true");

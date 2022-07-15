@@ -1,8 +1,12 @@
 package ru.nsd.servlets;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ru.nsd.models.User;
 import ru.nsd.services.user.UserService;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +15,14 @@ import java.io.IOException;
 
 public class RegisterPageServlet extends HttpServlet {
 
-    private final UserService userService = new UserService();
+    @Autowired
+    private UserService userService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException{
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
