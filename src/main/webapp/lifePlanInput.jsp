@@ -12,13 +12,13 @@
 
 <body>
 
-<form method="post" action="/uploadFileServlet" enctype="multipart/form-data">
+<form method="post" action="/uploadFile" enctype="multipart/form-data">
     Choose a file: <input type="file" name="file" />
     <input type="submit" value="Upload" />
 </form>
 
 <c:if test="${leaves.size() > 0}">
-    <form action="/setDayPlanServlet" method="post">
+    <form action="/setDayPlan" method="post">
         <p><b><c:out value="Date"/></b><br>
             <input type="text" name="date" size="40">
             <input type="text" name="leaves" value="${leaves}" hidden/>
@@ -34,7 +34,7 @@
     </form>
 </c:if>
 
-<form method="get" action="/Exit">
+<form method="get" action="/exit">
     <input type="submit" value="Exit" />
 </form>
 

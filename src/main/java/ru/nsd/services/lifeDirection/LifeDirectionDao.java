@@ -58,4 +58,16 @@ public class LifeDirectionDao {
         }
     }
 
+    public void delete(Long userID) {
+        String sql = "DELETE FROM LIFEDIRECTION WHERE USERID = ?";
+        try {
+            Connection connection = HikariPoolService.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, userID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new RuntimeException();
+        }
+    }
+
 }

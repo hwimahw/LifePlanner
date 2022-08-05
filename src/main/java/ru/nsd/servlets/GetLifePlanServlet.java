@@ -27,7 +27,7 @@ public class GetLifePlanServlet extends HttpServlet {
     private DayPlanService dayPlanService;
 
     @Override
-    public void init(ServletConfig config) throws ServletException{
+    public void init(ServletConfig config) throws ServletException {
         super.init(config);
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
@@ -36,28 +36,30 @@ public class GetLifePlanServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        createFile();
+        createFile(request, response);
         downloadFile(response);
     }
 
-    private void createFile() {
-        LifePlan lifePlan = (LifePlan) getServletContext().getAttribute("lifePlan");
-        if (lifePlan == null) {
-            return; /// EXCEPTION
+    private void createFile(HttpServletRequest request, HttpServletResponse response) {
+        LifePlan lifePlan = (LifePlan) request.getSession().getAttribute("lifePlan");
+        Long userId = (Long) request.getSession().getAttribute("userId");
+//        if (lifePlan == null) {
+//            File file = new File("out.txt");
+//            downloadFile(response);
+//            return;
+//        }
+        List<Map<String, String>> dayPlans = dayPlanService.select(userId);
+        for (Map<String, String> dayPlan : dayPlans) {
+            lifePlan.fillNonVisitNodes();
+            DayPlan dayPlanModel = new DayPlan(buildDate(dayPlan.get("DATE")), dayPlan);
+            lifePlan.fillPlanOfLeaves(dayPlanModel);
+            lifePlan.fillVisitNodesForPrinting();
+            lifePlan.printDayPlanToFile(dayPlanModel);
         }
-        List<Map<String, String>> dayPlans = dayPlanService.select();
-        if (dayPlans != null) {
-            for (Map<String, String> dayPlan : dayPlans) {
-                lifePlan.fillNonVisitNodes();
-                DayPlan dayPlanModel = new DayPlan(buildDate(dayPlan.get("DATE")), dayPlan);
-                lifePlan.fillPlanOfLeaves(dayPlanModel);
-                lifePlan.fillVisitNodesForPrinting();
-                lifePlan.printDayPlanToFile(dayPlanModel);
-            }
-        }
+        downloadFile(response);
     }
 
-    private void downloadFile(HttpServletResponse response) throws IOException {
+    private void downloadFile(HttpServletResponse response) {
         String filePath = "out.txt";
         File downloadFile = new File(filePath);
 
@@ -80,6 +82,8 @@ public class GetLifePlanServlet extends HttpServlet {
             while ((bytesRead = inStream.read(byteArray)) != -1) {
                 outStream.write(byteArray, 0, bytesRead);
             }
+        } catch (IOException ex){
+            throw new RuntimeException();
         }
     }
 }

@@ -87,7 +87,7 @@ public class LifePlan {
         Map<String, String> plans = dayPlan.getDayPlan();
         for (Map.Entry<String, String> entry : plans.entrySet()) {
             for (Noda noda : leaves) {
-                if (entry.getKey().equals(noda.getName())) {
+                if (entry.getKey().toUpperCase().equals(noda.getName().toUpperCase())) {
                     if (StringUtils.hasText(entry.getValue())) {
                         noda.setPlan(entry.getValue());
                     }

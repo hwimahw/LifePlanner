@@ -3,10 +3,8 @@ package ru.nsd.servlets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ru.nsd.models.DayPlan;
-import ru.nsd.LifePlan;
 import ru.nsd.services.dayplan.DayPlanService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

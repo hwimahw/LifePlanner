@@ -35,12 +35,13 @@ public class DayPlanDao {
         }
     }
 
-    public List<Map<String, String>> select() { // Названия листьев в xml файле должны соответствовать тому, как мы хотим назвать колонки таблицы в БД
-        String sql = "select date, subject, plan from lifeplan order by date";
+    public List<Map<String, String>> select(Long userId) { // Названия листьев в xml файле должны соответствовать тому, как мы хотим назвать колонки таблицы в БД
+        String sql = "select date, subject, plan from lifeplan where user_id = ? order by date";
         try {
             Connection conn = HikariPoolService.getConnection();
-            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet resultSet = stmt.executeQuery(sql);
+            PreparedStatement stmt = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            stmt.setLong(1, userId);
+            ResultSet resultSet = stmt.executeQuery();
             return getDayPlans(resultSet);
         } catch (SQLException ex) {
             throw new ConnectionWithDataBaseException();

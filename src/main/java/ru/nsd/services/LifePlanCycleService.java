@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
 import static org.springframework.util.CollectionUtils.isEmpty;
 
 @Component
@@ -29,16 +30,15 @@ public class LifePlanCycleService {
             DocumentBuilder docBuilder = factory.newDocumentBuilder();
             Document doc = docBuilder.parse(inputStream);
             lifePlan.setRoot(new Noda(doc.getDocumentElement().getAttribute("name"), null));
-            buildLifePlanIter(doc.getDocumentElement(), lifePlan.getRoot(), lifePlan);
+            buildLifePlanIter(doc.getDocumentElement(), lifePlan.getRoot(), lifePlan, null);
         } catch (Exception e) {
             throw new BuildLifePlanException();
         }
         return lifePlan;
     }
 
-    public List<LifeDirection> prepareLifePlanToLifeDirections(LifePlan lifePlan, HttpServletRequest request) {
+    public List<LifeDirection> prepareLifePlanToLifeDirections(LifePlan lifePlan, Long userId) {
         List<LifeDirection> lifeDirections = new ArrayList<>();
-        long userId = (Long) request.getSession().getAttribute("userId");
         int number[] = new int[1];
         number[0] = 1;
         prepareIter(lifePlan.getRoot(), 0, userId, lifeDirections, number, null);
@@ -51,10 +51,10 @@ public class LifePlanCycleService {
             return new LifePlan();
         }
         LifePlan lifePlan = new LifePlan();
-        List<Noda> nodas = lifeDirectionsToNodas(lifeDirections);
+        List<Noda> nodas = lifeDirectionsToNodas(lifeDirections, null);
         prepareLifeDirectionsToLifePlanIter(lifeDirections, nodas);
         Noda root = getRootNoda(lifeDirections, nodas);
-        List<Noda> leaves = getLeaves(nodas);
+        List<Noda> leaves = getLeaves(root);
         lifePlan.setRoot(root);
         lifePlan.setLeaves(leaves);
         return lifePlan;
@@ -68,7 +68,7 @@ public class LifePlanCycleService {
             if (isEmpty(nod.getChildren())) {
                 LifeDirection lifeDirect = getLifeDirectionByName(lifeDirections, nod.getName());
                 List<LifeDirection> lifeDirs = lifeDirections.stream().filter(lifeDirection -> lifeDirection.getParentNumber().equals(lifeDirect.getNumber())).collect(Collectors.toList());
-                List<Noda> children = lifeDirectionsToNodas(lifeDirs);
+                List<Noda> children = lifeDirectionsToNodas(lifeDirs, nod);
                 nod.setChildren(children);
                 prepareLifeDirectionsToLifePlanIter(lifeDirections, nod.getChildren());
             }
@@ -82,15 +82,30 @@ public class LifePlanCycleService {
         return nods.get(0);
     }
 
-    private List<Noda> getLeaves(List<Noda> nodas) {
-        List<Noda> nods = nodas.stream().filter(noda -> isEmpty(noda.getChildren())).collect(Collectors.toList());
-        return nods;
+    private List<Noda> getLeaves(Noda root) {
+        List<Noda> leaves = new ArrayList<>();
+        getLeavesIter(root, leaves);
+        return leaves;
     }
 
-    private List<Noda> lifeDirectionsToNodas(List<LifeDirection> lifeDirections) {
+    private void getLeavesIter(Noda root, List<Noda> leaves) {
+        if(isNull(root)){
+            return;
+        }
+        if (isEmpty(root.getChildren())) {
+            leaves.add(root);
+            return;
+        }
+        List<Noda> children = root.getChildren();
+        for (Noda child : children) {
+            getLeavesIter(child, leaves);
+        }
+    }
+
+    private List<Noda> lifeDirectionsToNodas(List<LifeDirection> lifeDirections, Noda parent) {
         List<Noda> nodas = new ArrayList<>();
         for (LifeDirection lifeDirection : lifeDirections) {
-            nodas.add(new Noda(lifeDirection.getName(), null));
+            nodas.add(new Noda(lifeDirection.getName(), parent));
         }
         return nodas;
     }
@@ -104,7 +119,7 @@ public class LifePlanCycleService {
         return null;
     }
 
-    private void buildLifePlanIter(Node nodeFromXmlDocument, Noda noda, LifePlan lifePlan) {
+    private void buildLifePlanIter(Node nodeFromXmlDocument, Noda noda, LifePlan lifePlan, Noda parent) {
         NodeList children = nodeFromXmlDocument.getChildNodes();
         if (children.getLength() == 0) {
             lifePlan.getLeaves().add(noda);
@@ -112,9 +127,9 @@ public class LifePlanCycleService {
         for (int i = 0; i < children.getLength(); i++) {
             Node nodeChildXmlDocument = children.item(i);
             if (nodeChildXmlDocument.getNodeType() != Node.TEXT_NODE) {
-                Noda nodaChild = new Noda(nodeChildXmlDocument.getAttributes().getNamedItem("name").getNodeValue(), noda);
+                Noda nodaChild = new Noda(nodeChildXmlDocument.getAttributes().getNamedItem("name").getNodeValue(), parent);
                 noda.getChildren().add(nodaChild);
-                buildLifePlanIter(nodeChildXmlDocument, nodaChild, lifePlan);
+                buildLifePlanIter(nodeChildXmlDocument, nodaChild, lifePlan, nodaChild);
             }
         }
     }

@@ -34,16 +34,17 @@ public class UploadFileServlet extends HttpServlet {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Part filePart = request.getPart("file");
-        InputStream fileContent = filePart.getInputStream();
-        LifePlan lifePlan = lifePlanCycleService.createLifePlan(fileContent);
-        List<LifeDirection> lifeDirections = lifePlanCycleService.prepareLifePlanToLifeDirections(lifePlan, request);
-        lifeDirectionService.add(lifeDirections);
-        request.setAttribute("leaves", lifePlan.getLeaves());
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/lifePlanInput");
-        requestDispatcher.forward(request, response);
-    }
+//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        Part filePart = request.getPart("file");
+//        InputStream fileContent = filePart.getInputStream();
+//        LifePlan lifePlan = lifePlanCycleService.createLifePlan(fileContent);
+//        List<LifeDirection> lifeDirections = lifePlanCycleService.prepareLifePlanToLifeDirections(lifePlan, request);
+//        lifeDirectionService.add(lifeDirections);
+//        request.setAttribute("leaves", lifePlan.getLeaves());
+//        request.getSession().setAttribute("lifePlan", lifePlan);
+//        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/lifePlanInput");
+//        requestDispatcher.forward(request, response);
+//    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
     }

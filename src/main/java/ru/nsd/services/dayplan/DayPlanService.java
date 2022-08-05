@@ -21,7 +21,7 @@ public class DayPlanService {
         dayPlanDao.insert(dayPlan);
     }
 
-    public List<Map<String, String>> select() {
-        return dayPlanDao.select();
+    public List<Map<String, String>> select(Long userId) {
+        return dayPlanDao.select(userId);
     }
 }

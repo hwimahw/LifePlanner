@@ -23,4 +23,8 @@ public class LifeDirectionService {
     public List<LifeDirection> get(Long userId) {
         return lifeDirectionDao.get(userId);
     }
+
+    public void delete(Long userID) {
+        lifeDirectionDao.delete(userID);
+    }
 }
