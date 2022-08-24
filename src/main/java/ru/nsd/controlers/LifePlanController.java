@@ -193,6 +193,13 @@ public class LifePlanController {
     private void downloadFile(HttpServletResponse response) {
         String filePath = "out.txt";
         File downloadFile = new File(filePath);
+        if (!downloadFile.exists()) {
+            try {
+                downloadFile.createNewFile();
+            } catch (IOException ex){
+                return;
+            }
+        }
 
         try (FileInputStream inStream = new FileInputStream(downloadFile);
              OutputStream outStream = response.getOutputStream()) {
@@ -214,7 +221,6 @@ public class LifePlanController {
                 outStream.write(byteArray, 0, bytesRead);
             }
         } catch (IOException ex) {
-            downloadFile.delete();
             throw new RuntimeException();
         }
         downloadFile.delete();

@@ -1,73 +1,52 @@
 package ru.nsd.services.lifeDirection;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ru.nsd.exceptions.UserBuildException;
 import ru.nsd.models.LifeDirection;
-import ru.nsd.services.hikaripool.HikariPoolService;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class LifeDirectionDao {
 
+    private final JdbcTemplate jdbcTemplate;
+
+    public LifeDirectionDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
     public void add(List<LifeDirection> lifeDirections) {
-        String sql = "INSERT INTO LifeDirection (userId, level, name, number, parentNumber) VALUES (?, ?, ?, ?, ?)";
-        try {
-            Connection connection = HikariPoolService.getConnection();
-            for (LifeDirection lifeDirection : lifeDirections) {
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setObject(1, lifeDirection.getUserId());
-                preparedStatement.setObject(2, lifeDirection.getLevel());
-                preparedStatement.setString(3, lifeDirection.getName());
-                preparedStatement.setObject(4, lifeDirection.getNumber());
-                preparedStatement.setObject(5, lifeDirection.getParentNumber());
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException exception) {
-            throw new UserBuildException();
+        for (LifeDirection lifeDirection : lifeDirections) {
+            jdbcTemplate.update("INSERT INTO LifeDirection (userId, level, name, number, parentNumber) VALUES (?, ?, ?, ?, ?)",
+                    lifeDirection.getUserId(), lifeDirection.getLevel(), lifeDirection.getName(), lifeDirection.getNumber(), lifeDirection.getParentNumber());
         }
     }
 
     public List<LifeDirection> get(Long userId) {
-        String sql = "SELECT ID, USERID, LEVEL, NAME, NUMBER, PARENTNUMBER from LifeDirection WHERE userId = ?";
-        List<LifeDirection> lifeDirections = new ArrayList<>();
-        try {
-            Connection connection = HikariPoolService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setLong(1, userId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Long id = resultSet.getLong(1);
-                userId = resultSet.getLong(2);
-                Integer level = resultSet.getInt(3);
-                String name = resultSet.getString(4);
-                Integer number = resultSet.getInt(5);
-                Integer parentNumber = resultSet.getInt(6);
-
-                LifeDirection lifeDirection = new LifeDirection(id, userId, level, name, number, parentNumber);
-                lifeDirections.add(lifeDirection);
-            }
-            return lifeDirections;
-        } catch (SQLException exception) {
-            throw new UserBuildException();
-        }
+        return jdbcTemplate.query("SELECT ID, USERID, LEVEL, NAME, NUMBER, PARENTNUMBER from LifeDirection WHERE userId = ?", new LifeDirectionExtractor(), userId);
     }
 
     public void delete(Long userID) {
-        String sql = "DELETE FROM LIFEDIRECTION WHERE USERID = ?";
-        try {
-            Connection connection = HikariPoolService.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setLong(1, userID);
-            preparedStatement.executeUpdate();
-        } catch (SQLException exception) {
-            throw new RuntimeException();
-        }
+        jdbcTemplate.update("DELETE FROM LIFEDIRECTION WHERE USERID = ?", userID);
     }
 
+    public static void main(String[] args) {
+        Map<String, String> map = new HashMap<>();
+        map.put("1", "1");
+        System.out.println(map.hashCode());
+        map.put(new String("ddjndjcndjcndjcndjcnjdc"), "2dcjdncdncjdcndc");
+        map.put(new String("ddjndjcndjjdcjndcjdcndccndjcndjcnjdc"), "2dcjdncddnnc dc dncjdcndc");
+        map.put(new String("ddjndjcndjjdcjndcjdcndccndjcndjcnjdc"), "2dcjdncddnnc dc dncjdcndc");
+        map.put(new String("dsss"), "2dcjdncddnnc dc dncjdcndc");
+        map.put(new String("sdsdsdsd"), "2dcjdncddnnc dc dncjdcndc");
+
+        System.out.println(map);
+        System.out.println(map.hashCode());
+
+        System.out.println(new String("1").hashCode());
+        System.out.println("1".hashCode());
+
+    }
 }

@@ -141,6 +141,11 @@ public class LifePlan {
 
     public void printDayPlanToFile(DayPlan dayPlan) {
         File file = new File("out.txt");
+        try {
+            file.createNewFile();
+        }catch (IOException ex){
+
+        }
         try (FileWriter fileWriter = new FileWriter(file, true);
              BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
             bufferedWriter.write("-----------------------------------------------------------\n");
