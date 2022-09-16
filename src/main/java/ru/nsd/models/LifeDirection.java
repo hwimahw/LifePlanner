@@ -1,5 +1,7 @@
 package ru.nsd.models;
 
+import java.util.Objects;
+
 public class LifeDirection {
 
     private long id;
@@ -79,5 +81,18 @@ public class LifeDirection {
 
     public void setParentNumber(Integer parentNumber) {
         this.parentNumber = parentNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LifeDirection that = (LifeDirection) o;
+        return id == that.id &&
+                userId == that.userId &&
+                level == that.level &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(number, that.number) &&
+                Objects.equals(parentNumber, that.parentNumber);
     }
 }

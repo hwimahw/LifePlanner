@@ -20,7 +20,7 @@ public class CommonFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
-        String requestURI = ((HttpServletRequest) request).getRequestURI();
+        String requestURI = req.getRequestURI();
 
         if ("/registerPage".equals(requestURI) || "/register".equals(requestURI)
                 || "/logInPage".equals(requestURI) || "/logIn".equals(requestURI)) {
