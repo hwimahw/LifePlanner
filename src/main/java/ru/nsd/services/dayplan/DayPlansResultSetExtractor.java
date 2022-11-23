@@ -16,7 +16,7 @@ public class DayPlansResultSetExtractor implements ResultSetExtractor<List<Map<S
     }
 
     private List<Map<String, String>> getDayPlans(ResultSet resultSet) {
-        Set<Map<String, String>> dayPlans = new HashSet<>();
+        List<Map<String, String>> dayPlans = new ArrayList<>();
         try {
 //            resultSet.setFetchDirection(ResultSet.FETCH_UNKNOWN);
             Map<String, String> dayPlan = new HashMap<>();
@@ -31,17 +31,27 @@ public class DayPlansResultSetExtractor implements ResultSetExtractor<List<Map<S
                 String dateForCompare = resultSet.getString(1);
                 if (!dateForCompare.equals(date)) {
                     date = dateForCompare;
-                    dayPlans.add(dayPlan);
                     dayPlan = new HashMap<>();
                     dayPlan.put("DATE", date);
+                } else {
+                    dayPlans.remove(dayPlan);
                 }
-                dayPlans.remove(dayPlan);
-                dayPlan.put(resultSet.getString(2), resultSet.getString(3));
-                dayPlans.add(dayPlan);
+                dayPlans.add(addPlanToSubject(dayPlan, resultSet.getString(2), resultSet.getString(3)));
             }
         } catch (SQLException ex) {
             throw new ConnectionWithDataBaseException();
         }
         return new ArrayList<>(dayPlans);
+    }
+
+    private Map<String, String> addPlanToSubject(Map<String, String> dayPlan, String subjectName, String plan){
+        String definedPlan = dayPlan.get(subjectName);
+        if (definedPlan != null) {
+            definedPlan = definedPlan + ", " + plan;
+            dayPlan.put(subjectName, definedPlan);
+        } else {
+            dayPlan.put(subjectName, plan);
+        }
+        return dayPlan;
     }
 }
