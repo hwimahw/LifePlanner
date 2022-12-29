@@ -52,12 +52,28 @@ public class LifePlanCycleService {
         }
         LifePlan lifePlan = new LifePlan();
         List<Noda> nodas = lifeDirectionsToNodas(lifeDirections, null);
-        prepareLifeDirectionsToLifePlanIter(lifeDirections, nodas);
+//        prepareLifeDirectionsToLifePlanIter(lifeDirections, nodas);
         Noda root = getRootNoda(lifeDirections, nodas);
+        prepareLifeDirectionsToLifePlanIter(lifeDirections, root);
         List<Noda> leaves = getLeaves(root);
         lifePlan.setRoot(root);
         lifePlan.setLeaves(leaves);
         return lifePlan;
+    }
+
+    private void prepareLifeDirectionsToLifePlanIter(List<LifeDirection> lifeDirections, Noda noda) {
+        if (isEmpty(lifeDirections)) {
+            return;
+        }
+        if (isEmpty(noda.getChildren())) {
+            LifeDirection lifeDirect = getLifeDirectionByName(lifeDirections, noda.getName());
+            List<LifeDirection> lifeDirs = lifeDirections.stream().filter(lifeDirection -> lifeDirection.getParentNumber().equals(lifeDirect.getNumber())).collect(Collectors.toList());
+            List<Noda> children = lifeDirectionsToNodas(lifeDirs, noda);
+            noda.setChildren(children);
+            for (Noda nod : children) {
+                prepareLifeDirectionsToLifePlanIter(lifeDirections, nod);
+            }
+        }
     }
 
     private void prepareLifeDirectionsToLifePlanIter(List<LifeDirection> lifeDirections, List<Noda> nodas) {
@@ -89,7 +105,7 @@ public class LifePlanCycleService {
     }
 
     private void getLeavesIter(Noda root, List<Noda> leaves) {
-        if(isNull(root)){
+        if (isNull(root)) {
             return;
         }
         if (isEmpty(root.getChildren())) {

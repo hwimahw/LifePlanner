@@ -21,8 +21,8 @@ public class DayPlansResultSetExtractorTest {
         List<Map<String, String>> dayPlansExpected = new ArrayList<>();
         Map<String, String> dayPlan = new HashMap<>();
         dayPlan.put("DATE", "2022-08-22");
-        dayPlan.put("Programming", "plan5");
-        dayPlan.put("Algorithms", "plan4");
+        dayPlan.put("Programming", "plan1, plan3, plan5");
+        dayPlan.put("Algorithms", "plan2, plan4");
         dayPlansExpected.add(dayPlan);
 
         {
